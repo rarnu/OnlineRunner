@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../static/js/jquery-2.0.0.min.js"></script>
+    <script src="../static/js/ktor.js"></script>
+    <script type="text/javascript">
+        function runCode() {
+            var c1 = $("#code1")[0].value;
+            var c2 = $("#code2")[0].value;
+            var name1 = "main.js";
+            var name2 = "func.js";
+            var start = "main.js";
+            $.ajax({
+                url: "/codepack",
+                type: "post",
+                dataType: "json",
+                data: {
+                    language: "javascript",
+                    filecount: 2,
+                    start: start,
+                    filename0: name1,
+                    filename1: name2,
+                    code0: c1,
+                    code1: c2
+                },
+                success: function (data) {
+                    if (data.result === 0)  {
+                        $("#result")[0].innerHTML = "[Succ][output] " + data.output + "<br>[Succ][Error] " + data.error;
+                    } else {
+                        $("#result")[0].innerHTML = "[Failed][output] " + data.output + "<br>[Failed][Error] " + data.error;
+                    }
+                }
+            });
+        }
+
+    </script>
+</head>
+<body>
+
+<p>
+<textarea id="code1" style="width: 20%; height: 200px; resize: none">
+const func = require('./func.js');
+let x = func.add(1, 2);
+console.log(x);
+</textarea>
+<textarea id="code2" style="width: 20%; height: 200px; resize: none">
+function add(x, y) {
+    return x + y;
+}
+module.exports = {
+    add
+}
+</textarea>
+</p>
+<p>
+<button onclick="runCode();">Run</button>
+</p>
+<p>
+    <div id="result"></div>
+</p>
+
+</body>
+</html>
