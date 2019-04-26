@@ -3,13 +3,13 @@ package com.rarnu.code.code
 import com.rarnu.kt.common.runCommand
 import java.io.File
 
-class CRunner : CodeIntf {
-    override fun runPack(cmd: String, codePack: Map<String, File>, start: String): RunResult {
+class CRunner(cmd: String) : CodeIntf(cmd) {
+    override fun runPack(codePack: Map<String, File>, start: String): RunResult {
         // TODO: run pack
         return RunResult()
     }
 
-    override fun run(cmd: String, codeFile: File): RunResult {
+    override fun run(codeFile: File): RunResult {
         val ret = RunResult()
         val dest = codeFile.absolutePath.replace(".c", ".out")
         runCommand {

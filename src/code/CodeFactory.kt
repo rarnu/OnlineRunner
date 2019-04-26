@@ -23,16 +23,11 @@ inline val ApplicationCall.extensions: Map<String, String>
         "julia" to ".julia"
     )
 
-inline val ApplicationCall.compilers: Map<String, String>
-    get() = mapOf(
-        "c" to application.config("ktor.language.c"),
-        "javascript" to application.config("ktor.language.javascript"),
-        "python" to application.config("ktor.language.python")
-    )
-
 inline val ApplicationCall.runners: Map<String, CodeIntf>
     get() = mapOf(
-        "c" to CRunner(),
-        "javascript" to JavascriptRunner(),
-        "python" to PythonRunner()
+        "c" to CRunner(config("ktor.language.c")),
+        "javascript" to JavascriptRunner(config("ktor.language.javascript")),
+        "python" to PythonRunner(config("ktor.language.python")),
+        "swift" to SwiftRunner(config("ktor.language.swift")),
+        "php" to PhpRunner(config("ktor.language.php"))
     )

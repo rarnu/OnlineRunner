@@ -1,18 +1,26 @@
 package com.rarnu.code
 
-import com.rarnu.code.code.compilers
 import com.rarnu.code.code.extensions
 import com.rarnu.code.code.runners
-import com.rarnu.code.utils.*
+import com.rarnu.code.utils.mkdir
+import com.rarnu.code.utils.session
+import com.rarnu.code.utils.toJsonEncoded
+import com.rarnu.code.utils.writeTempFile
 import io.ktor.application.call
 import io.ktor.request.receiveParameters
 import io.ktor.response.respondText
 import io.ktor.routing.Routing
+import io.ktor.routing.get
 import io.ktor.routing.post
 import java.io.File
 import java.util.*
 
 fun Routing.codeRouting() {
+
+    get("/hello") {
+        val ses = session
+        call.respondText { ses.uuid }
+    }
 
     post("/code") {
         val p = call.receiveParameters()
@@ -26,12 +34,11 @@ fun Routing.codeRouting() {
                 call.respondText { "{\"result\":1, \"message\":\"language not supported.\"}" }
             } else {
                 val ext = call.extensions[language.toLowerCase()] ?: ""
-                val cmd = call.compilers[language.toLowerCase()] ?: ""
                 val uuid = session.uuid
                 mkdir("$codePath/$uuid")
                 val fname = "$uuid/${UUID.randomUUID()}$ext"
                 val f = call.writeTempFile(fname, code)
-                val ret = runner.run(cmd, f)
+                val ret = runner.run(f)
                 call.respondText { "{\"result\":0, \"output\":\"${ret.output.toJsonEncoded()}\", \"error\":\"${ret.error.toJsonEncoded()}\"}" }
             }
         }
@@ -61,8 +68,7 @@ fun Routing.codeRouting() {
                     codemap[fname] = f
                 }
                 val start = p["start"] ?: ""
-                val cmd = call.compilers[language.toLowerCase()] ?: ""
-                val ret = runner.runPack(cmd, codemap, start)
+                val ret = runner.runPack(codemap, start)
                 call.respondText { "{\"result\":0, \"output\":\"${ret.output.toJsonEncoded()}\", \"error\":\"${ret.error.toJsonEncoded()}\"}" }
             }
         }
