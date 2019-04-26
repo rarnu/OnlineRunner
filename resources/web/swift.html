@@ -7,6 +7,7 @@
     <script src="../static/js/ktor.js"></script>
     <script type="text/javascript">
         function runCode() {
+
             var fileCount = 2;
             var codeData = {};
             for (var i = 0; i < fileCount; i++) {
@@ -41,13 +42,13 @@
 let a = add(1, 2)
 print(a)
 </textarea><br>
-
 <span id="filename1">func.swift</span><br>
 <textarea id="code1" style="width: 20%; height: 200px; resize: none">
 func add(_ x: Int, _ y: Int) -> Int {
     return x + y
 }
-</textarea>
+</textarea><br>
+
 </p>
 <p>
 <button onclick="runCode();">Run</button>

@@ -26,6 +26,7 @@ fun Routing.codeRouting() {
         val p = call.receiveParameters()
         val language = p["language"] ?: ""
         val code = p["code"] ?: ""
+        val param = p["param"] ?: ""
         if (code == "" || language == "") {
             call.respondText { "{\"result\":1, \"message\":\"language or code is empty.\"}" }
         } else {
@@ -38,7 +39,7 @@ fun Routing.codeRouting() {
                 mkdir("$codePath/$uuid")
                 val fname = "$uuid/${UUID.randomUUID()}$ext"
                 val f = call.writeTempFile(fname, code)
-                val ret = runner.run(f)
+                val ret = runner.run(f, param)
                 call.respondText { "{\"result\":0, \"output\":\"${ret.output.toJsonEncoded()}\", \"error\":\"${ret.error.toJsonEncoded()}\"}" }
             }
         }
@@ -48,6 +49,7 @@ fun Routing.codeRouting() {
         val p = call.receiveParameters()
         val language = p["language"] ?: ""
         val fileCount = (p["filecount"] ?: "0").toInt()
+        val param = p["param"] ?: ""
         val uuid = session.uuid
         val codeid = UUID.randomUUID().toString()
         val dirPath = "$codePath/$uuid/$codeid"
@@ -68,7 +70,7 @@ fun Routing.codeRouting() {
                     codemap[fname] = f
                 }
                 val start = p["start"] ?: ""
-                val ret = runner.runPack(codemap, start)
+                val ret = runner.runPack(codemap, start, param)
                 call.respondText { "{\"result\":0, \"output\":\"${ret.output.toJsonEncoded()}\", \"error\":\"${ret.error.toJsonEncoded()}\"}" }
             }
         }

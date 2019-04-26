@@ -1,7 +1,9 @@
-#!/bin/sh
+#!/bin/bash
+
+## script for ubuntu
 
 ## common
-sudo apt install clang libicu-dev libcurl3 libpython2.7 binutils fpc nodejs unzip zip build-essential gobjc gobjc++ gnustep gnustep-devel libgnustep-base-dev golang-go curl vim
+sudo apt install clang libicu-dev libcurl3 libpython2.7 binutils fpc nodejs unzip zip build-essential gobjc gobjc++ gnustep gnustep-devel libgnustep-base-dev golang-go curl vim php llvm libblocksruntime-dev libdispatch-dev openjdk-8-jdk
 
 ## swift
 cd ~
@@ -19,9 +21,10 @@ mv swift-5.0.1-RELEASE-ubuntu18.04/ swift/
 # rm swift-5.0.1-RELEASE-ubuntu18.04.tar.gz
 cd /usr/bin
 sudo ln -s ~/Develop/swift/usr/bin/swift swift
-cd ~
+
 
 ## kotlin
+cd ~
 curl -s https://get.sdkman.io | bash
 source .sdkman/bin/sdkman-init.sh
 sdk install kotlin

@@ -7,16 +7,17 @@
     <script src="../static/js/ktor.js"></script>
     <script type="text/javascript">
         function runCode() {
-            var fileCount = 2;
+
+            var fileCount = 3;
             var codeData = {};
             for (var i = 0; i < fileCount; i++) {
                 codeData["filename" + i] = $("#filename" + i)[0].innerHTML;
                 codeData["code" + i] = $("#code" + i)[0].value;
             }
 
-            codeData["language"] = "swift";
+            codeData["language"] = "c";
             codeData["filecount"] = fileCount;
-            codeData["start"] = "main.swift";
+            codeData["start"] = "main.c";
 
             $.ajax({
                 url: "/codepack",
@@ -36,16 +37,26 @@
 </head>
 <body>
 <p>
-<span id="filename0">main.swift</span><br>
+<span id="filename0">main.c</span><br>
 <textarea id="code0" style="width: 20%; height: 200px; resize: none">
-let a = add(1, 2)
-print(a)
+#include <stdio.h>
+#include "func.h"
+int main() {
+    int a = add(1, 2);
+    printf("result = %d\n", a);
+    return 0;
+}
 </textarea><br>
-
-<span id="filename1">func.swift</span><br>
+<span id="filename1">func.h</span><br>
 <textarea id="code1" style="width: 20%; height: 200px; resize: none">
-func add(_ x: Int, _ y: Int) -> Int {
-    return x + y
+int add(int x, int y);
+</textarea><br>
+<span id="filename2">func.c</span><br>
+<textarea id="code2" style="width: 20%; height: 200px; resize: none">
+#include "func.h"
+
+int add(int x, int y) {
+    return x + y;
 }
 </textarea>
 </p>

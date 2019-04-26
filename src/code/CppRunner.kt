@@ -3,16 +3,16 @@ package com.rarnu.code.code
 import com.rarnu.kt.common.runCommand
 import java.io.File
 
-class CRunner(cmd: String) : CodeIntf(cmd) {
+class CppRunner(cmd: String) : CodeIntf(cmd) {
     override fun runPack(codePack: Map<String, File>, start: String, param: String): RunResult {
         val ret = RunResult()
-        val mainDest = codePack.getValue(start).absolutePath.replace(".c", ".out")
+        val mainDest = codePack.getValue(start).absolutePath.replace(".cpp", ".out")
         runCommand {
             commands.add(cmd)
             commands.add("-w")
             commands.add("-o")
             commands.add(mainDest)
-            codePack.filterKeys { it.endsWith(".c") }.forEach { _, u -> commands.add(u.absolutePath) }
+            codePack.filterKeys { it.endsWith(".cpp") }.forEach { _, u -> commands.add(u.absolutePath) }
             result { out0, err0 ->
                 if (err0 == "") {
                     runCommand {
@@ -35,7 +35,7 @@ class CRunner(cmd: String) : CodeIntf(cmd) {
 
     override fun run(codeFile: File, param: String): RunResult {
         val ret = RunResult()
-        val dest = codeFile.absolutePath.replace(".c", ".out")
+        val dest = codeFile.absolutePath.replace(".cpp", ".out")
         runCommand {
             // compile
             commands.add(cmd)
