@@ -3,14 +3,45 @@
 ## script for ubuntu
 
 ## common
-sudo apt install clang libicu-dev libcurl3 libpython2.7 binutils fpc nodejs unzip zip build-essential gobjc gobjc++ gnustep gnustep-devel libgnustep-base-dev golang-go curl vim php llvm libblocksruntime-dev libdispatch-dev openjdk-8-jdk
+sudo apt update
+sudo apt install net-tools
+sudo apt install gcc
+sudo apt install perl
+sudo apt install make
+sudo apt install clang
+sudo apt install libicu-dev
+sudo apt install libcurl3
+sudo apt install libpython2.7
+sudo apt install binutils
+sudo apt install fpc
+sudo apt install nodejs
+sudo apt install npm
+sudo apt install unzip
+sudo apt install zip
+sudo apt install build-essential
+sudo apt install gobjc
+sudo apt install gobjc++
+sudo apt install gnustep
+sudo apt install gnustep-devel
+sudo apt install libgnustep-base-dev
+sudo apt install golang
+sudo apt install curl
+sudo apt install vim
+sudo apt install php
+sudo apt install llvm
+sudo apt install libblocksruntime-dev
+sudo apt install libdispatch-dev
+sudo apt install openjdk-8-jdk
+sudo apt install ruby
+sudo apt install scala
+sudo apt install lua5.2
+sudo apt install r-base
 
 ## swift
 cd ~
 mkdir Develop
 cd Develop
 
-#swift
 wget https://swift.org/builds/swift-5.0.1-release/ubuntu1804/swift-5.0.1-RELEASE/swift-5.0.1-RELEASE-ubuntu18.04.tar.gz
 wget https://swift.org/builds/swift-5.0.1-release/ubuntu1804/swift-5.0.1-RELEASE/swift-5.0.1-RELEASE-ubuntu18.04.tar.gz.sig
 wget -q -O - https://swift.org/keys/all-keys.asc | gpg --import -
@@ -22,6 +53,15 @@ mv swift-5.0.1-RELEASE-ubuntu18.04/ swift/
 cd /usr/bin
 sudo ln -s ~/Develop/swift/usr/bin/swift swift
 
+## dart
+cd ~/Develop
+wget https://storage.googleapis.com/dart-archive/channels/stable/release/latest/linux_packages/dart_2.2.0-1_amd64.deb
+sudo dpkg -i dart_2.2.0-1_amd64.deb
+
+## julia
+cd ~/Develop
+wget https://julialang-s3.julialang.org/bin/linux/x64/1.1/julia-1.1.0-linux-x86_64.tar.gz
+## TODO:
 
 ## kotlin
 cd ~
@@ -32,5 +72,5 @@ cd /usr/bin
 sudo ln -s ~/.sdkman/candidates/kotlin/current/bin/kotlin kotlin
 sudo ln -s ~/.sdkman/candidates/kotlin/current/bin/kotlinc kotlinc
 
-## some hints
-# echo "please add swift path with: $ export PATH=~/Develop/swift/usr/bin:\"${PATH}\""
+## typescript
+npm install -g typescript

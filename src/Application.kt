@@ -14,9 +14,12 @@ fun main(args: Array<String>): Unit = io.ktor.server.tomcat.EngineMain.main(args
 fun Application.module() {
     codePath = config("ktor.code.execPath")
     mkdir(codePath)
+    latexImagePath = config("ktor.image.latexPath")
+    mkdir(latexImagePath)
     installPlugin()
     routing {
         resources("web")
+        resources("static")
         static("/static") { resources("static") }
         static { defaultResource("index.html", "web") }
         codeRouting()

@@ -4,11 +4,11 @@ import com.rarnu.code.utils.proj
 import com.rarnu.kt.common.runCommand
 import java.io.File
 
-class KotlinRunner(cmd: String) : CodeIntf(cmd) {
+class ScalaRunner(cmd: String) : CodeIntf(cmd) {
 
     override fun run(codeFile: File, param: String): RunResult {
         val ret = RunResult()
-        val dest = codeFile.nameWithoutExtension.proj() + "Kt"
+        val dest = codeFile.nameWithoutExtension.proj()
         val dir = codeFile.absolutePath.substringBeforeLast("/")
         runCommand {
             commands.add("${cmd}c")
@@ -38,11 +38,11 @@ class KotlinRunner(cmd: String) : CodeIntf(cmd) {
 
     override fun runPack(codePack: Map<String, File>, start: String, param: String): RunResult {
         val ret = RunResult()
-        val dest = codePack.getValue(start).nameWithoutExtension.proj() + "Kt"
+        val dest = codePack.getValue(start).nameWithoutExtension.proj()
         val dir = codePack.getValue(start).absolutePath.substringBeforeLast("/")
         runCommand {
             commands.add("${cmd}c")
-            codePack.filterKeys { it.endsWith(".kt") }.forEach { _, u -> commands.add(u.name) }
+            codePack.filterKeys { it.endsWith(".scala") }.forEach { _, u -> commands.add(u.name) }
             workDir = dir
             timeout = 5000
             result { out0, err0 ->

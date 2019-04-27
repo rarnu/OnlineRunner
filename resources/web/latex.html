@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../static/js/jquery-2.0.0.min.js"></script>
+    <script src="../static/js/ktor.js"></script>
+    <script type="text/javascript">
+        function identifyImage(idx) {
+            $("#result" + idx)[0].innerHTML = "Identifying...";
+            $.ajax({
+                url: "/latex",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    format: "jpg",
+                    imageIndex: idx
+                },
+                success: function(data) {
+                    console.log("succ!");
+                    if (data.result === 0) {
+                        $("#result" + idx)[0].innerHTML = data.latex;
+                    } else {
+                        $("#result" + idx)[0].innerHTML = data.error;
+                    }
+                },
+                error: function () {
+                    $("#result" + idx)[0].innerHTML = "Request timeout.";
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+
+<table id="latextable" style="width: 320px; border-spacing: 8px;">
+
+</table>
+
+<script type="text/javascript">
+    var str = "";
+    for (var i = 1; i <= 29; i++) {
+        str += "<tr><td  style='border: solid 1px lightgrey; padding: 8px 8px 8px 8px;'>";
+        str += "<img src='../static/images/"+ i + ".jpg' width='300px'><br>";
+        str += "<button onclick='identifyImage("+ i +")'>Identify</button><br>";
+        str += "<div id='result"+ i +"'></div>";
+        str += "</td></tr>";
+    }
+    $("#latextable")[0].innerHTML = str;
+</script>
+
+</body>
+</html>

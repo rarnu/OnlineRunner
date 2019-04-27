@@ -1,26 +1,22 @@
 package com.rarnu.code.code
 
-import com.rarnu.code.utils.proj
 import com.rarnu.kt.common.runCommand
 import java.io.File
 
-class KotlinRunner(cmd: String) : CodeIntf(cmd) {
+class TypescriptRunner(cmd: String, val nodeCmd: String) : CodeIntf(cmd) {
 
     override fun run(codeFile: File, param: String): RunResult {
         val ret = RunResult()
-        val dest = codeFile.nameWithoutExtension.proj() + "Kt"
         val dir = codeFile.absolutePath.substringBeforeLast("/")
         runCommand {
-            commands.add("${cmd}c")
+            commands.add(cmd)
             commands.add(codeFile.name)
             workDir = dir
-            timeout = 5000
             result { out0, err0 ->
                 if (err0 == "") {
                     runCommand {
-                        commands.add(cmd)
-                        commands.add(dest)
-                        commands.add(param)
+                        commands.add(nodeCmd)
+                        commands.add(codeFile.nameWithoutExtension + ".js")
                         workDir = dir
                         result { out1, err1 ->
                             ret.output = out1
@@ -38,19 +34,17 @@ class KotlinRunner(cmd: String) : CodeIntf(cmd) {
 
     override fun runPack(codePack: Map<String, File>, start: String, param: String): RunResult {
         val ret = RunResult()
-        val dest = codePack.getValue(start).nameWithoutExtension.proj() + "Kt"
-        val dir = codePack.getValue(start).absolutePath.substringBeforeLast("/")
+        val mainFile = codePack.getValue(start)
+        val dir = mainFile.absolutePath.substringBeforeLast("/")
         runCommand {
-            commands.add("${cmd}c")
-            codePack.filterKeys { it.endsWith(".kt") }.forEach { _, u -> commands.add(u.name) }
+            commands.add(cmd)
+            commands.add(mainFile.name)
             workDir = dir
-            timeout = 5000
             result { out0, err0 ->
                 if (err0 == "") {
                     runCommand {
-                        commands.add(cmd)
-                        commands.add(dest)
-                        commands.add(param)
+                        commands.add(nodeCmd)
+                        commands.add(mainFile.nameWithoutExtension + ".js")
                         workDir = dir
                         result { out1, err1 ->
                             ret.output = out1
