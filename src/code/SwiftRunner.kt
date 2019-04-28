@@ -4,7 +4,7 @@ import java.io.File
 
 class SwiftRunner(cmd: String) : CodeIntf(cmd) {
 
-    override fun runPack(codePack: Map<String, File>, start: String, param: String): RunResult {
+    override fun runPack(codePack: Map<String, File>, start: String, param: List<String>): RunResult {
         val mainFile = codePack.getValue(start)
         val projPath = mainFile.absolutePath.substringBeforeLast("/")
         var codeStr = ""

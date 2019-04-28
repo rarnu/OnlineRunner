@@ -9,7 +9,7 @@
         function identifyImage(idx) {
             $("#result" + idx)[0].innerHTML = "Identifying...";
             $.ajax({
-                url: "/latex",
+                url: "/latexsample",
                 type: "POST",
                 dataType: "json",
                 data: {
@@ -29,13 +29,47 @@
                 }
             });
         }
+        function identifyUpload() {
+            var img = $("#imgfile")[0].files[0];
+            if (img) {
+                var fd = new FormData();
+                fd.append('image', img);
+                $("#result")[0].innerHTML = "Identifying...";
+                $.ajax({
+                    url: "/latex",
+                    type: "POST",
+                    dataType: "json",
+                    data: fd,
+                    processData: false,
+                    contentType: false,
+                    success: function(data) {
+                        console.log("succ!");
+                        if (data.result === 0) {
+                            $("#result")[0].innerHTML = data.latex;
+                        } else {
+                            $("#result")[0].innerHTML = data.error;
+                        }
+                    },
+                    error: function () {
+                        $("#result")[0].innerHTML = "Request timeout.";
+                    }
+                });
+            }
+        }
     </script>
 </head>
 <body>
 
+<p>
+<input id="imgfile" type="file"><button onclick="identifyUpload();">Upload</button><br>
+<div id="result"></div>
+</p>
+
+<p>
 <table id="latextable" style="width: 320px; border-spacing: 8px;">
 
 </table>
+</p>
 
 <script type="text/javascript">
     var str = "";

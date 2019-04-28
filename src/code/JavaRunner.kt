@@ -6,7 +6,7 @@ import java.io.File
 
 class JavaRunner(cmd: String) : CodeIntf(cmd) {
 
-    override fun run(codeFile: File, param: String): RunResult {
+    override fun run(codeFile: File, param: List<String>): RunResult {
         val ret = RunResult()
         val dest = codeFile.nameWithoutExtension.proj()
         val dir = codeFile.absolutePath.substringBeforeLast("/")
@@ -20,7 +20,7 @@ class JavaRunner(cmd: String) : CodeIntf(cmd) {
                     runCommand {
                         commands.add(cmd)
                         commands.add(dest)
-                        commands.add(param)
+                        param.forEach { p -> commands.add(p) }
                         workDir = dir
                         result { out1, err1 ->
                             ret.output = out1
@@ -36,7 +36,7 @@ class JavaRunner(cmd: String) : CodeIntf(cmd) {
         return ret
     }
 
-    override fun runPack(codePack: Map<String, File>, start: String, param: String): RunResult {
+    override fun runPack(codePack: Map<String, File>, start: String, param: List<String>): RunResult {
         val ret = RunResult()
         val dest = codePack.getValue(start).nameWithoutExtension.proj()
         val dir = codePack.getValue(start).absolutePath.substringBeforeLast("/")
@@ -50,7 +50,7 @@ class JavaRunner(cmd: String) : CodeIntf(cmd) {
                     runCommand {
                         commands.add(cmd)
                         commands.add(dest)
-                        commands.add(param)
+                        param.forEach { p -> commands.add(p) }
                         workDir = dir
                         result { out1, err1 ->
                             ret.output = out1

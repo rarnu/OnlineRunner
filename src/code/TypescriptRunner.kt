@@ -5,7 +5,7 @@ import java.io.File
 
 class TypescriptRunner(cmd: String, val nodeCmd: String) : CodeIntf(cmd) {
 
-    override fun run(codeFile: File, param: String): RunResult {
+    override fun run(codeFile: File, param: List<String>): RunResult {
         val ret = RunResult()
         val dir = codeFile.absolutePath.substringBeforeLast("/")
         runCommand {
@@ -17,6 +17,7 @@ class TypescriptRunner(cmd: String, val nodeCmd: String) : CodeIntf(cmd) {
                     runCommand {
                         commands.add(nodeCmd)
                         commands.add(codeFile.nameWithoutExtension + ".js")
+                        param.forEach { p -> commands.add(p) }
                         workDir = dir
                         result { out1, err1 ->
                             ret.output = out1
@@ -32,7 +33,7 @@ class TypescriptRunner(cmd: String, val nodeCmd: String) : CodeIntf(cmd) {
         return ret
     }
 
-    override fun runPack(codePack: Map<String, File>, start: String, param: String): RunResult {
+    override fun runPack(codePack: Map<String, File>, start: String, param: List<String>): RunResult {
         val ret = RunResult()
         val mainFile = codePack.getValue(start)
         val dir = mainFile.absolutePath.substringBeforeLast("/")
@@ -45,6 +46,7 @@ class TypescriptRunner(cmd: String, val nodeCmd: String) : CodeIntf(cmd) {
                     runCommand {
                         commands.add(nodeCmd)
                         commands.add(mainFile.nameWithoutExtension + ".js")
+                        param.forEach { p -> commands.add(p) }
                         workDir = dir
                         result { out1, err1 ->
                             ret.output = out1

@@ -21,7 +21,7 @@ inline val ApplicationCall.extensions: Map<String, String>
         "rust" to ".rust",
         "pascal" to ".pas",
         "ruby" to ".rb",            // /lin/mac
-        "julia" to ".julia",
+        "julia" to ".jl",           // /mac
         "r" to ".r",                // /lin/mac
         "typescript" to ".ts",      // /lin/mac
         "scala" to ".scala",        // /lin/mac
@@ -51,6 +51,7 @@ inline val ApplicationCall.runners: Map<String, CodeIntf>
         "lua" to LuaRunner(config(if (ISMACOSX) "ktor.language.luamac" else "ktor.language.lua")),
         "scala" to ScalaRunner(config(if (ISMACOSX) "ktor.language.scalamac" else "ktor.language.scala")),
         "r" to RRunner(config(if (ISMACOSX) "ktor.language.Rmac" else "ktor.language.R")),
+        "julia" to JuliaRunner(config("ktor.language.julia")),
 
         "latex" to LatexRunner(config("ktor.mathpix.base64"), config("ktor.mathpix.appid"), config("ktor.mathpix.appkey"))
     )

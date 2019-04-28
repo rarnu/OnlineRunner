@@ -4,7 +4,7 @@ import com.rarnu.kt.common.runCommand
 import java.io.File
 
 class CppRunner(cmd: String) : CodeIntf(cmd) {
-    override fun runPack(codePack: Map<String, File>, start: String, param: String): RunResult {
+    override fun runPack(codePack: Map<String, File>, start: String, param: List<String>): RunResult {
         val ret = RunResult()
         val mainDest = codePack.getValue(start).absolutePath.replace(".cpp", ".out")
         runCommand {
@@ -18,7 +18,7 @@ class CppRunner(cmd: String) : CodeIntf(cmd) {
                     runCommand {
                         // run compile result
                         commands.add(mainDest)
-                        commands.add(param)
+                        param.forEach { p -> commands.add(p) }
                         result { out1, err1 ->
                             ret.output = out1
                             ret.error = err1
@@ -33,7 +33,7 @@ class CppRunner(cmd: String) : CodeIntf(cmd) {
         return ret
     }
 
-    override fun run(codeFile: File, param: String): RunResult {
+    override fun run(codeFile: File, param: List<String>): RunResult {
         val ret = RunResult()
         val dest = codeFile.absolutePath.replace(".cpp", ".out")
         runCommand {
@@ -48,7 +48,7 @@ class CppRunner(cmd: String) : CodeIntf(cmd) {
                     runCommand {
                         // run compile result
                         commands.add(dest)
-                        commands.add(param)
+                        param.forEach { p -> commands.add(p) }
                         result { out1, err1 ->
                             ret.output = out1
                             ret.error = err1

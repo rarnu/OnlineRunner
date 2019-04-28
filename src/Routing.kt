@@ -6,7 +6,7 @@ import com.rarnu.code.code.runners
 import com.rarnu.code.utils.*
 import io.ktor.application.application
 import io.ktor.application.call
-import io.ktor.http.content.resolveResource
+import io.ktor.http.content.*
 import io.ktor.request.receiveMultipart
 import io.ktor.request.receiveParameters
 import io.ktor.response.respondText
@@ -40,7 +40,7 @@ fun Routing.codeRouting() {
                 mkdir("$codePath/$uuid")
                 val fname = "$uuid/${UUID.randomUUID()}$ext"
                 val f = call.writeTempFile(fname, code)
-                val ret = runner.run(f, param)
+                val ret = runner.run(f, param.split(" "))
                 call.respondText { "{\"result\":0, \"output\":\"${ret.output.toJsonEncoded()}\", \"error\":\"${ret.error.toJsonEncoded()}\"}" }
             }
         }
@@ -71,42 +71,59 @@ fun Routing.codeRouting() {
                     codemap[fname] = f
                 }
                 val start = p["start"] ?: ""
-                val ret = runner.runPack(codemap, start, param)
+                val ret = runner.runPack(codemap, start, param.split(" "))
                 call.respondText { "{\"result\":0, \"output\":\"${ret.output.toJsonEncoded()}\", \"error\":\"${ret.error.toJsonEncoded()}\"}" }
             }
         }
     }
 
+    // latex 转换
     post("/latex") {
-        val p = call.receiveParameters()
-        val imgFormat = p["format"] ?: "png"        // 图片格式，支持 png, jpg
-        val source = p["source"] ?: "static"        // 判断是站内的还是用户上传的，static 表示站内，upload 表示上传
-        var fdest: File? = null
-        if (source == "static") {
-            val imgIndex = (p["imageIndex"] ?: "0").toInt() // 站内图片的 index
-            val fname = "images/$imgIndex.$imgFormat"
-            fdest = call.resolveFile(fname, "static")
-        } else {
+        val file = call.receiveMultipart().readPart() as? PartData.FileItem
+        if (file != null) {
             val uuid = session.uuid
+            val ext = file.originalFileName?.substringAfterLast(".") ?: ""
             mkdir("$latexImagePath/$uuid")
-            val fname = "$latexImagePath/$uuid/${UUID.randomUUID()}.png"
-            val ftmp = File(fname)
-            if (call.receiveMultipart().save("zip", ftmp)) {
-                fdest = ftmp
+            val fname = "$latexImagePath/$uuid/${UUID.randomUUID()}.$ext"
+            val fdest = File(fname)
+            file.streamProvider().use { input ->
+                fdest.outputStream().buffered().use { output ->
+                    input.copyToSuspend(output)
+                }
             }
-        }
-        if (fdest != null) {
+            file.dispose()
             val runner = call.runners["latex"]
             if (runner == null) {
                 call.respondText { "{\"result\":0, \"latex\":\"\", \"error\":\"latex not supported.\"}" }
             } else {
-                val ret = (runner as LatexRunner).imageToLatex(fdest, imgFormat)
-                val jsonstr = "{\"result\":0, \"latex\":\"${ret.output.toJsonEncoded()}\", \"error\":\"${ret.error.toJsonEncoded()}\"}"
+                val ret = (runner as LatexRunner).imageToLatex(fdest, ext)
+                val jsonstr =
+                    "{\"result\":0, \"latex\":\"${ret.output.toJsonEncoded()}\", \"error\":\"${ret.error.toJsonEncoded()}\"}"
                 call.respondText { jsonstr }
             }
         } else {
             call.respondText { "{\"result\":1, \"latex\":\"\", \"error\":\"image not found.\"}" }
         }
+    }
 
+    // latex 转换（演示用）
+    post("/latexsample") {
+        val p = call.receiveParameters()
+        val imgIndex = (p["imageIndex"] ?: "0").toInt()
+        val fname = "images/$imgIndex.jpg"
+        val fdest = call.resolveFile(fname, "static")
+        if (fdest != null) {
+            val runner = call.runners["latex"]
+            if (runner == null) {
+                call.respondText { "{\"result\":0, \"latex\":\"\", \"error\":\"latex not supported.\"}" }
+            } else {
+                val ret = (runner as LatexRunner).imageToLatex(fdest, "jpg")
+                val jsonstr =
+                    "{\"result\":0, \"latex\":\"${ret.output.toJsonEncoded()}\", \"error\":\"${ret.error.toJsonEncoded()}\"}"
+                call.respondText { jsonstr }
+            }
+        } else {
+            call.respondText { "{\"result\":1, \"latex\":\"\", \"error\":\"image not found.\"}" }
+        }
     }
 }
