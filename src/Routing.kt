@@ -9,6 +9,7 @@ import io.ktor.application.call
 import io.ktor.http.content.*
 import io.ktor.request.receiveMultipart
 import io.ktor.request.receiveParameters
+import io.ktor.response.respond
 import io.ktor.response.respondText
 import io.ktor.routing.Routing
 import io.ktor.routing.get
@@ -17,6 +18,13 @@ import java.io.File
 import java.util.*
 
 fun Routing.codeRouting() {
+
+
+    get("/index") {
+        val c = call.resolveFileBytes("index.html", "web")!!
+        println("c => ${String(c)}")
+        call.respond(call.resolveResource("index.html", "web") ?: "")
+    }
 
     get("/hello") {
         val ses = session
@@ -86,11 +94,7 @@ fun Routing.codeRouting() {
             mkdir("$latexImagePath/$uuid")
             val fname = "$latexImagePath/$uuid/${UUID.randomUUID()}.$ext"
             val fdest = File(fname)
-            file.streamProvider().use { input ->
-                fdest.outputStream().buffered().use { output ->
-                    input.copyToSuspend(output)
-                }
-            }
+            file.save(fdest)
             file.dispose()
             val runner = call.runners["latex"]
             if (runner == null) {
@@ -108,11 +112,13 @@ fun Routing.codeRouting() {
 
     // latex 转换（演示用）
     post("/latexsample") {
+        mkdir("$latexImagePath/sample")
         val p = call.receiveParameters()
         val imgIndex = (p["imageIndex"] ?: "0").toInt()
         val fname = "images/$imgIndex.jpg"
-        val fdest = call.resolveFile(fname, "static")
-        if (fdest != null) {
+        val fdest = File("$latexImagePath/sample/${UUID.randomUUID()}.jpg")
+        val b = call.resolveFileSave(fdest, fname, "static")
+        if (b) {
             val runner = call.runners["latex"]
             if (runner == null) {
                 call.respondText { "{\"result\":0, \"latex\":\"\", \"error\":\"latex not supported.\"}" }

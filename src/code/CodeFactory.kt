@@ -21,7 +21,7 @@ inline val ApplicationCall.extensions: Map<String, String>
         "rust" to ".rust",
         "pascal" to ".pas",
         "ruby" to ".rb",            // /lin/mac
-        "julia" to ".jl",           // /mac
+        "julia" to ".jl",           // /lin/mac
         "r" to ".r",                // /lin/mac
         "typescript" to ".ts",      // /lin/mac
         "scala" to ".scala",        // /lin/mac
@@ -30,6 +30,8 @@ inline val ApplicationCall.extensions: Map<String, String>
         "perl" to ".pl",            // /lin/mac
         "basic" to ".bas",
         "dart" to ".dart"           // /lin
+
+        // latex                    // /api
     )
 
 inline val ApplicationCall.runners: Map<String, CodeIntf>

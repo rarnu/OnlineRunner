@@ -1,9 +1,7 @@
 package com.rarnu.code.utils
 
-import io.ktor.http.content.MultiPartData
-import io.ktor.http.content.PartData
-import io.ktor.http.content.forEachPart
-import io.ktor.http.content.streamProvider
+import io.ktor.http.decodeURLPart
+import io.ktor.util.KtorExperimentalAPI
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -41,3 +39,15 @@ suspend fun InputStream.copyToSuspend(
     }
     return@withContext bytesCopied
 }
+
+@UseExperimental(KtorExperimentalAPI::class)
+fun findContainingJarFile(url: String): File {
+    if (url.startsWith("jar:file:")) {
+        val jarPathSeparator = url.indexOf("!", startIndex = 9)
+        require(jarPathSeparator != -1) { "Jar path requires !/ separator but it is: $url" }
+        return File(url.substring(9, jarPathSeparator).decodeURLPart())
+    }
+    throw IllegalArgumentException("Only local jars are supported (jar:file:)")
+}
+
+fun ByteArray.save(dest: File) = dest.writeBytes(this)
