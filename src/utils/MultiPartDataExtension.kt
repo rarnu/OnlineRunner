@@ -1,11 +1,9 @@
 package com.rarnu.code.utils
 
 import com.sun.org.apache.xpath.internal.operations.Bool
-import io.ktor.http.content.MultiPartData
-import io.ktor.http.content.PartData
-import io.ktor.http.content.forEachPart
-import io.ktor.http.content.streamProvider
+import io.ktor.http.content.*
 import java.io.File
+import javax.servlet.http.Part
 
 suspend fun MultiPartData.save(field: String, dest: File): Boolean {
     var ret = false
@@ -36,3 +34,28 @@ suspend fun PartData.FileItem.save(dest: File): Boolean {
     }
     return ret
 }
+
+suspend fun MultiPartData.value(name: String): String? {
+    var ret: String? = null
+    val list = this.readAllParts().filter { it.name == name }
+    if (list.isNotEmpty()) {
+        val item = list[0]
+        if (item is PartData.FormItem) {
+            ret = item.value
+        }
+    }
+    return ret
+}
+
+suspend fun MultiPartData.file(name: String): PartData.FileItem? {
+    var ret: PartData.FileItem? = null
+    val list = this.readAllParts().filter { it.name == name }
+    if (list.isNotEmpty()) {
+        val item = list[0]
+        if (item is PartData.FileItem) {
+            ret = item
+        }
+    }
+    return ret
+}
+

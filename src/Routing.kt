@@ -80,7 +80,8 @@ fun Routing.codeRouting() {
                 }
                 val start = p["start"] ?: ""
                 val ret = runner.runPack(codemap, start, param.split(" "))
-                call.respondText { "{\"result\":0, \"output\":\"${ret.output.toJsonEncoded()}\", \"error\":\"${ret.error.toJsonEncoded()}\"}" }
+                val json = "{\"result\":0, \"output\":\"${ret.output.toJsonEncoded()}\", \"error\":\"${ret.error.toJsonEncoded()}\"}"
+                call.respondText { json }
             }
         }
     }

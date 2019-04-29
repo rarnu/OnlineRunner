@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../static/js/jquery-2.0.0.min.js"></script>
+    <script src="../static/js/ktor.js"></script>
+    <script type="text/javascript">
+        function runCode() {
+
+            var fileCount = 2;
+            var codeData = {};
+            for (var i = 0; i < fileCount; i++) {
+                codeData["filename" + i] = $("#filename" + i)[0].innerHTML;
+                codeData["code" + i] = $("#code" + i)[0].value;
+            }
+
+            codeData["language"] = "c#";
+            codeData["filecount"] = fileCount;
+            codeData["start"] = "main.cs";
+
+            $.ajax({
+                url: "/codepack",
+                type: "post",
+                dataType: "json",
+                data: codeData,
+                success: function (data) {
+                    if (data.result === 0)  {
+                        $("#result")[0].innerHTML = "[Succ][output] " + data.output + "<br>[Succ][Error] " + data.error;
+                    } else {
+                        $("#result")[0].innerHTML = "[Failed][output] " + data.output + "<br>[Failed][Error] " + data.error;
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<p>
+<span id="filename0">main.cs</span><br>
+<textarea id="code0" style="width: 20%; height: 200px; resize: none">
+using System;
+class main {
+    static void Main () {
+        int a = func.add(1, 2);
+        System.Console.Write(String.Format("Hello, {0:G}", a));
+    }
+}
+</textarea><br>
+<span id="filename1">func.cs</span><br>
+<textarea id="code1" style="width: 20%; height: 200px; resize: none">
+class func {
+    public static int add(int x, int y) {
+        return x + y;
+    }
+}
+</textarea><br>
+
+</p>
+<p>
+<button onclick="runCode();">Run</button>
+</p>
+<p>
+    <div id="result"></div>
+</p>
+
+</body>
+</html>

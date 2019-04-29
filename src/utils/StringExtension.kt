@@ -2,7 +2,7 @@ package com.rarnu.code.utils
 
 import java.io.File
 
-fun String.toJsonEncoded() = this.replace("\n", "\\n").replace("\"", "\\\"").replace("\\", "\\\\")
+fun String.toJsonEncoded() = this.replace("\\", "\\\\").replace("\n", "\\n").replace("\"", "\\\"")
 fun String.proj() = substring(0, 1).toUpperCase() + substring(1)
 
 fun String.appendPathPart(part: String): String {

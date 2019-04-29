@@ -36,6 +36,7 @@ sudo apt install ruby
 sudo apt install scala
 sudo apt install lua5.2
 sudo apt install r-base
+sudo apt install mono-devel
 
 ## swift
 cd ~
@@ -61,7 +62,9 @@ sudo dpkg -i dart_2.2.0-1_amd64.deb
 ## julia
 cd ~/Develop
 wget https://julialang-s3.julialang.org/bin/linux/x64/1.1/julia-1.1.0-linux-x86_64.tar.gz
-## TODO:
+tar zxf julia-1.1.0-linux-x86_64.tar.gz
+cd /usr/local/bin
+sudo ln -s ~/Develop/julia-1.1.0/bin/julia julia
 
 ## kotlin
 cd ~
