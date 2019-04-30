@@ -1,0 +1,101 @@
+.div-code-border {
+    border: solid 1px lightgrey;
+}
+
+.div-code-bar {
+    width: 100%;
+    height: 40px;
+}
+
+.div-code-type {
+    float: left;
+    width: 100px;
+    height: 100%;
+}
+
+.span-code-type {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-left: 20px;
+    color: gray;
+    width: 100%;
+}
+
+.div-code-run {
+    float: right;
+    width: 190px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.div-line {
+    height: 1px;
+    width: 100%;
+    background-color: lightgrey;
+}
+
+.img-oper {
+    width: 16px;
+    height: 16px;
+    margin-left: 8px;
+}
+
+.span-oper {
+    margin-left: 4px;
+    color: gray;
+}
+
+.div-param {
+    width: 100%;
+    height: 30px;
+    display: none;
+    color: gray;
+}
+
+.title-param {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 50px;
+    margin-left: 4px;
+}
+
+.input-param {
+    width: 100%;
+    margin: 2px 4px;
+    outline: none;
+    border: none;
+}
+
+.div-line-param {
+    height: 1px;
+    width: 100%;
+    background-color: lightgrey;
+    display: none;
+}
+
+.div-code-container {
+    float: left;
+}
+
+.div-v-line {
+    float: left;
+    background-color: lightgrey;
+}
+.div-html-result {
+    float: left;
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
+
+.div-html-output {
+    padding: 4px;
+}
+
+.div-sub-language {
+    padding-left: 24px;
+    height: 20px;
+    color: darkgray;
+}
