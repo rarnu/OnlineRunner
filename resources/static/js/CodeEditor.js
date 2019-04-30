@@ -1,4 +1,4 @@
-var languageList = ["Python", "Java", "JavaScript", "C#", "PHP", "C", "C++", "Swift", "Kotlin", "Go", "Rust", "ObjC", "Pascal", "Ruby", "Julia", "R", "TypeScript", "Scala", "Lua", "Perl", "Dart"];
+var languageList = ["Python", "Java", "JavaScript", "C#", "PHP", "C", "C++", "Swift", "Kotlin", "Go", "Rust", "ObjC", "Pascal", "Ruby", "Julia", "R", "TypeScript", "Scala", "Lua", "Perl", "Dart", "F#"];
 
 function CodeEditor(baseobj, codeParams, outputParams) {
 
@@ -241,6 +241,9 @@ function CodeEditor(baseobj, codeParams, outputParams) {
                 break;
             case "Dart":
                 this.editor.setOption("mode", "text/x-dart");
+                break;
+            case "F#":
+                this.editor.setOption("mode", "text/x-fsharp");
                 break;
         }
     };

@@ -37,6 +37,7 @@ sudo apt install scala
 sudo apt install lua5.2
 sudo apt install r-base
 sudo apt install mono-devel
+sudo apt install fsharp
 
 ## swift
 cd ~

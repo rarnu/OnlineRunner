@@ -26,7 +26,8 @@ inline val ApplicationCall.extensions: Map<String, String>
         "scala" to ".scala",        // /lin/mac
         "lua" to ".lua",            // /lin/mac
         "perl" to ".pl",            // /lin/mac
-        "dart" to ".dart"           // /lin/mac
+        "dart" to ".dart",          // /lin/mac
+        "f#" to ".fs"               // /lin/mac
 
         // latex                    // /api
     )
@@ -52,7 +53,8 @@ inline val ApplicationCall.runners: Map<String, CodeIntf>
         "r" to RRunner(config(if (ISMACOSX) "ktor.language.Rmac" else "ktor.language.R")),
         "julia" to JuliaRunner(config("ktor.language.julia")),
         "rust" to RustRunner(config(if (ISMACOSX) "ktor.language.rustmac" else "ktor.language.rust")),
-        "c#" to CSharpRunner(config(if (ISMACOSX) "ktor.language.csharpmac" else "ktor.language.csharp"), config(if (ISMACOSX) "ktor.language.csharprunmac" else "ktor.language.csharprun")),
+        "c#" to CSharpRunner(config(if (ISMACOSX) "ktor.language.csharpmac" else "ktor.language.csharp"), config(if (ISMACOSX) "ktor.language.netrunmac" else "ktor.language.netrun")),
+        "f#" to FSharpRunner(config(if (ISMACOSX) "ktor.language.fsharpmac" else "ktor.language.fsharp"), config(if (ISMACOSX) "ktor.language.netrunmac" else "ktor.language.netrun")),
         "pascal" to PascalRunner(config(if (ISMACOSX) "ktor.language.pascalmac" else "ktor.language.pascal")),
 
         "latex" to LatexRunner(config("ktor.mathpix.base64"), config("ktor.mathpix.appid"), config("ktor.mathpix.appkey"))

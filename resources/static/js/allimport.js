@@ -26,6 +26,7 @@ document.write("<script type='text/javascript' src='../static/codemirror/mode/r/
 document.write("<script type='text/javascript' src='../static/codemirror/mode/lua/lua.js'></script>");
 document.write("<script type='text/javascript' src='../static/codemirror/mode/perl/perl.js'></script>");
 document.write("<script type='text/javascript' src='../static/codemirror/mode/dart/dart.js'></script>");
+document.write("<script type='text/javascript' src='../static/codemirror/mode/mllike/mllike.js'></script>");
 
 // themes
 document.write("<link href='../static/codemirror/theme/darcula.css' rel='stylesheet'>");

@@ -3,20 +3,20 @@ package com.rarnu.code.code
 import com.rarnu.kt.common.runCommand
 import java.io.File
 
-class CSharpRunner(val csc: String, val mono: String) : CodeIntf("") {
+class FSharpRunner(val fsc: String, val mono: String) : CodeIntf("") {
 
     override fun run(codeFile: File, param: List<String>): RunResult {
         val ret = RunResult()
         val dir = codeFile.absolutePath.substringBeforeLast("/")
         runCommand {
-            commands.add(csc)
+            commands.add(fsc)
             commands.add(codeFile.name)
             workDir = dir
             result { out0, err0 ->
                 if (err0 == "") {
                     runCommand {
                         commands.add(mono)
-                        commands.add(codeFile.absolutePath.replace(".cs", ".exe"))
+                        commands.add(codeFile.absolutePath.replace(".fs", ".exe"))
                         param.forEach { p -> commands.add(p) }
                         workDir = dir
                         result { out1, err1 ->
@@ -38,14 +38,15 @@ class CSharpRunner(val csc: String, val mono: String) : CodeIntf("") {
         val mainFile = codePack.getValue(start)
         val dir = mainFile.absolutePath.substringBeforeLast("/")
         runCommand {
-            commands.add(csc)
-            codePack.forEach { _, u -> commands.add(u.name) }
+            commands.add(fsc)
+            codePack.filterKeys { it != start }.forEach { _, u -> commands.add(u.name) }
+            commands.add(start)
             workDir = dir
             result { out0, err0 ->
                 if (err0 == "") {
                     runCommand {
                         commands.add(mono)
-                        commands.add(mainFile.absolutePath.replace(".cs", ".exe"))
+                        commands.add(mainFile.absolutePath.replace(".fs", ".exe"))
                         param.forEach { p -> commands.add(p) }
                         workDir = dir
                         result { out1, err1 ->

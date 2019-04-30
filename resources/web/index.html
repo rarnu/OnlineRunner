@@ -18,9 +18,7 @@
     var editor = new CodeEditor($("#editor"), {
         language: "JavaScript"
     }, {});
-    var htmlEditor = new HtmlEditor($("#html"), {
-
-    });
+    var htmlEditor = new HtmlEditor($("#html"), { });
     editor.setCode("console.log(\"hello js\");");
     htmlEditor.setHtmlCode("<button class='btn' onclick='test();'>test</button>");
     htmlEditor.setJavsscriptCode("function test() {\n    alert(\"666\");\n}");
