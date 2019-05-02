@@ -155,8 +155,8 @@
      "[comment ///// let / me / show / you /////]",
      "[comment */]");
 
-  // TODO: correctly identify when multiple variables are being declared
+  // correctly identify when multiple variables are being declared
   // by use of a comma-separated list.
-  // TODO: correctly identify when variables are being declared in a tuple.
-  // TODO: identify protocols as types when used before an extension?
+  // correctly identify when variables are being declared in a tuple.
+  // identify protocols as types when used before an extension?
 })();

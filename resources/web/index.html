@@ -7,22 +7,33 @@
 
 </head>
 <body>
-
-<div id="editor" style="width: 40%; height: 400px; margin-left: 30%"></div>
 <p>
-    <button onclick="javascript:editor.setTheme(false);">Light</button>
-    <button onclick="javascript:editor.setTheme(true);">Dark</button>
+<div id="editor" style="width: 40%; height: 400px; margin-left: 30%"></div>
 </p>
+<p>
+    <button onclick="javascript:editor.setTheme(false);htmlEditor.setTheme(false);">Light</button>
+    <button onclick="javascript:editor.setTheme(true);htmlEditor.setTheme(true);">Dark</button>
+    <button onclick="javascript:editor.setCanRun(true);">Can Run</button>
+    <button onclick="javascript:editor.setCanRun(false);">Can't Run</button>
+</p>
+<p>
 <div id="html" style="width: 40%; height: 600px; margin-left: 30%"></div>
+</p>
 <script>
+
     var editor = new CodeEditor($("#editor"), {
-        language: "JavaScript"
+        language: "JavaScript",
+        isDark: true
     }, {});
-    var htmlEditor = new HtmlEditor($("#html"), { });
+
+    var htmlEditor = new HtmlEditor($("#html"), {
+        isDark: true
+    });
     editor.setCode("console.log(\"hello js\");");
     htmlEditor.setHtmlCode("<button class='btn' onclick='test();'>test</button>");
     htmlEditor.setJavsscriptCode("function test() {\n    alert(\"666\");\n}");
     htmlEditor.setCssCode(".btn {\n    color:red;\n}");
+
 </script>
 </body>
 </html>

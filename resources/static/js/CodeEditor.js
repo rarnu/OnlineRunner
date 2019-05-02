@@ -1,95 +1,110 @@
-var languageList = ["Python", "Java", "JavaScript", "C#", "PHP", "C", "C++", "Swift", "Kotlin", "Go", "Rust", "ObjC", "Pascal", "Ruby", "Julia", "R", "TypeScript", "Scala", "Lua", "Perl", "Dart", "F#"];
-
 function CodeEditor(baseobj, codeParams, outputParams) {
 
     var that = this;
     this.width = baseobj[0].offsetWidth;
     this.height = baseobj[0].offsetHeight;
 
-    this.border = element("div");
-    attr(this.border, {class: "div-code-border"});
-    size(this.border, {width: this.width + "px", height:this.height + "px"});
-    baseobj[0].appendChild(this.border);
+    if (!codeParams.hasOwnProperty("isDark")) {
+        this.isDark = false;
+        codeParams["theme"] = "default";
+    } else {
+        this.isDark = codeParams["isDark"];
+        codeParams["theme"] = this.isDark ? "darcula" : "default";
+    }
+
+    var border = element("div");
+    attr(border, {class: this.isDark ? "div-code-border-dark" : "div-code-border"});
+    size(border, {width: this.width + "px", height: this.height + "px"});
+    baseobj[0].appendChild(border);
 
     var bar = element("div");
     attr(bar, {class: "div-code-bar"});
-    this.border.appendChild(bar);
+    border.appendChild(bar);
     var type = element("div");
     attr(type, {class: "div-code-type"});
     bar.appendChild(type);
 
-    this.language = element("span");
-    attr(this.language, {class: "span-code-type"});
-    type.appendChild(this.language);
+    var language = element("span");
+    attr(language, {class: "span-code-type"});
+    type.appendChild(language);
 
-    this.run = element("div");
-    attr(this.run, {class: "div-code-run"});
-    bar.appendChild(this.run);
+    var run = element("div");
+    attr(run, {class: "div-code-run"});
+    bar.appendChild(run);
 
-    this.imgParam = element("img");
-    attr(this.imgParam, {class: "img-oper", src: "../static/images/code-param.png"});
-    this.imgParam.onclick = toggleParam;
-    this.run.appendChild(this.imgParam);
+    var imgParam = element("img");
+    attr(imgParam, {
+        class: "img-oper",
+        src: this.isDark ? "../static/images/code-param-dark.png" : "../static/images/code-param.png"
+    });
+    imgParam.onclick = toggleParam;
+    run.appendChild(imgParam);
 
-    this.spanParam = element("span");
-    attr(this.spanParam, {class: "span-oper"});
-    this.spanParam.innerHTML = "param";
-    this.spanParam.onclick = toggleParam;
-    this.run.appendChild(this.spanParam);
+    var spanParam = element("span");
+    attr(spanParam, {class: "span-oper"});
+    spanParam.innerHTML = "param";
+    spanParam.onclick = toggleParam;
+    run.appendChild(spanParam);
 
-    this.imgRun = element("img");
-    attr(this.imgRun, {class: "img-oper", src: "../static/images/code-run.png"});
-    this.imgRun.onclick = runCode;
-    this.run.appendChild(this.imgRun);
+    var imgRun = element("img");
+    attr(imgRun, {
+        class: "img-oper",
+        src: this.isDark ? "../static/images/code-run-dark.png" : "../static/images/code-run.png"
+    });
+    imgRun.onclick = runCode;
+    run.appendChild(imgRun);
 
-    this.spanRun = element("span");
-    attr(this.spanRun, {class: "span-oper"});
-    this.spanRun.innerHTML = "run";
-    this.spanRun.onclick = runCode;
-    this.run.appendChild(this.spanRun);
+    var spanRun = element("span");
+    attr(spanRun, {class: "span-oper"});
+    spanRun.innerHTML = "run";
+    spanRun.onclick = runCode;
+    run.appendChild(spanRun);
 
     var imgCopy = element("img");
-    attr(imgCopy, {class: "img-oper", src: "../static/images/code-copy.png"});
+    attr(imgCopy, {
+        class: "img-oper",
+        src: this.isDark ? "../static/images/code-copy-dark.png" : "../static/images/code-copy.png"
+    });
     imgCopy.onclick = copyCode;
-    this.run.appendChild(imgCopy);
+    run.appendChild(imgCopy);
 
     var spanCopy = element("span");
-    attr(spanCopy, {class:"span-oper"});
+    attr(spanCopy, {class: "span-oper"});
     spanCopy.innerHTML = "copy";
     spanCopy.onclick = copyCode;
-    this.run.appendChild(spanCopy);
+    run.appendChild(spanCopy);
 
     var divLine = element("div");
-    attr(divLine, {class:"div-line"});
-    this.border.appendChild(divLine);
+    attr(divLine, {class: this.isDark ? "div-line-dark" : "div-line"});
+    border.appendChild(divLine);
 
     var divCode = element("div");
-    this.border.appendChild(divCode);
+    border.appendChild(divCode);
 
     var divLine2 = element("div");
-    attr(divLine2, {class:"div-line"});
-    this.border.appendChild(divLine2);
+    attr(divLine2, {class: this.isDark ? "div-line-dark" : "div-line"});
+    border.appendChild(divLine2);
 
     // params
-    this.divParam = element("div");
-    attr(this.divParam, {class: "div-param"});
-    this.border.appendChild(this.divParam);
+    var divParam = element("div");
+    attr(divParam, {class: "div-param"});
+    border.appendChild(divParam);
 
     var titleParam = element("span");
     attr(titleParam, {class: "title-param"});
     titleParam.innerHTML = "params";
-    this.divParam.appendChild(titleParam);
+    divParam.appendChild(titleParam);
 
-    this.edtParam = element("input");
-    attr(this.edtParam, {type: "input", class: "input-param"});
-    this.divParam.appendChild(this.edtParam);
+    var edtParam = element("input");
+    attr(edtParam, {type: "input", class: this.isDark ? "input-param-dark" : "input-param"});
+    divParam.appendChild(edtParam);
 
-    this.divLine3 = element("div");
-    attr(this.divLine3, {class:"div-line-param"});
-    this.border.appendChild(this.divLine3);
+    var divLine3 = element("div");
+    attr(divLine3, {class: this.isDark ? "div-line-param-dark" : "div-line-param"});
+    border.appendChild(divLine3);
 
     var divOutput = element("div");
-    this.border.appendChild(divOutput);
+    border.appendChild(divOutput);
 
     var h = Math.floor(this.height / 3) * 2;
 
@@ -97,6 +112,9 @@ function CodeEditor(baseobj, codeParams, outputParams) {
 
     if (!codeParams.hasOwnProperty("matchBrackets")) {
         codeParams["matchBrackets"] = true;
+    }
+    if (!codeParams.hasOwnProperty("styleActiveLine")) {
+        codeParams["styleActiveLine"] = true;
     }
     if (!codeParams.hasOwnProperty("lineNumbers")) {
         codeParams["lineNumbers"] = true;
@@ -116,9 +134,7 @@ function CodeEditor(baseobj, codeParams, outputParams) {
     if (!codeParams.hasOwnProperty("readOnly")) {
         codeParams["readOnly"] = false;
     }
-    if (!codeParams.hasOwnProperty("theme")) {
-        codeParams["theme"] = "default";
-    }
+
     if (!codeParams.hasOwnProperty("showCursorWhenSelecting")) {
         codeParams["showCursorWhenSelecting"] = true;
     }
@@ -130,13 +146,11 @@ function CodeEditor(baseobj, codeParams, outputParams) {
         };
     }
 
-    this.editor = CodeMirror(divCode, codeParams);
+    var editor = CodeMirror(divCode, codeParams);
+    editor.setSize(this.width, h);
 
-    this.editor.setSize(this.width, h);
+    outputParams["theme"] = this.isDark ? "darcula" : "default";
 
-    if (!outputParams.hasOwnProperty("theme")) {
-        outputParams["theme"] = "default";
-    }
     if (!outputParams.hasOwnProperty("indentUnit")) {
         outputParams["indentUnit"] = 4;
     }
@@ -153,15 +167,15 @@ function CodeEditor(baseobj, codeParams, outputParams) {
         outputParams["lineWrapping"] = true;
     }
 
-    this.output = CodeMirror(divOutput, outputParams);
-    this.output.setSize(this.width, this.height - 40 - h - 2);
+    var output = CodeMirror(divOutput, outputParams);
+    output.setSize(this.width, this.height - 40 - h - 2);
 
     /**
      * 设置代码
      * @param code
      */
-    this.setCode = function(code) {
-        this.editor.setValue(code);
+    this.setCode = function (code) {
+        editor.setValue(code);
     };
 
     /**
@@ -169,96 +183,96 @@ function CodeEditor(baseobj, codeParams, outputParams) {
      * @returns {string}
      */
     this.getCode = function () {
-        return this.editor.getValue();
+        return editor.getValue();
     };
 
     /**
      * 更换语言
      * @param language
      */
-    this.setLanguage = function (language) {
-        this.language.innerHTML = language;
-        switch (language) {
+    this.setLanguage = function (lng) {
+        language.innerHTML = lng;
+        switch (lng) {
             case "JavaScript":
-                this.editor.setOption("mode", "text/javascript");
+                editor.setOption("mode", "text/javascript");
                 break;
             case "Python":
-                this.editor.setOption("mode", "text/x-python");
+                editor.setOption("mode", "text/x-python");
                 break;
             case "Java":
-                this.editor.setOption("mode", "text/x-java");
+                editor.setOption("mode", "text/x-java");
                 break;
             case "C#":
-                this.editor.setOption("mode", "text/x-csharp");
+                editor.setOption("mode", "text/x-csharp");
                 break;
             case "PHP":
-                this.editor.setOption("mode", "text/x-php");
+                editor.setOption("mode", "text/x-php");
                 break;
             case "C":
-                this.editor.setOption("mode", "text/x-c++src");
+                editor.setOption("mode", "text/x-c++src");
                 break;
             case "C++":
-                this.editor.setOption("mode", "text/x-c++src");
+                editor.setOption("mode", "text/x-c++src");
                 break;
             case "Swift":
-                this.editor.setOption("mode", "text/x-swift");
+                editor.setOption("mode", "text/x-swift");
                 break;
             case "Kotlin":
-                this.editor.setOption("mode", "text/x-kotlin");
+                editor.setOption("mode", "text/x-kotlin");
                 break;
             case "Go":
-                this.editor.setOption("mode", "text/x-go");
+                editor.setOption("mode", "text/x-go");
                 break;
             case "Rust":
-                this.editor.setOption("mode", "text/x-rustsrc");
+                editor.setOption("mode", "text/x-rustsrc");
                 break;
             case "ObjC":
-                this.editor.setOption("mode", "text/x-objectivec");
+                editor.setOption("mode", "text/x-objectivec");
                 break;
             case "Pascal":
-                this.editor.setOption("mode", "text/x-pascal");
+                editor.setOption("mode", "text/x-pascal");
                 break;
             case "Ruby":
-                this.editor.setOption("mode", "text/x-ruby");
+                editor.setOption("mode", "text/x-ruby");
                 break;
             case "Julia":
-                this.editor.setOption("mode", "text/x-julia");
+                editor.setOption("mode", "text/x-julia");
                 break;
             case "R":
-                this.editor.setOption("mode", "text/x-rsrc");
+                editor.setOption("mode", "text/x-rsrc");
                 break;
             case "TypeScript":
-                this.editor.setOption("mode", "text/typescript");
+                editor.setOption("mode", "text/typescript");
                 break;
             case "Scala":
-                this.editor.setOption("mode", "text/x-scala");
+                editor.setOption("mode", "text/x-scala");
                 break;
             case "Lua":
-                this.editor.setOption("mode", "text/x-lua");
+                editor.setOption("mode", "text/x-lua");
                 break;
             case "Perl":
-                this.editor.setOption("mode", "text/x-perl");
+                editor.setOption("mode", "text/x-perl");
                 break;
             case "Dart":
-                this.editor.setOption("mode", "text/x-dart");
+                editor.setOption("mode", "text/x-dart");
                 break;
             case "F#":
-                this.editor.setOption("mode", "text/x-fsharp");
+                editor.setOption("mode", "text/x-fsharp");
                 break;
         }
     };
 
     function toggleParam() {
         var h = Math.floor(that.height / 3) * 2;
-        if (that.divParam.style.display === "flex") {
-            that.divParam.style.display = "none";
-            that.divLine3.style.display = "none";
-            that.output.setSize(that.width, that.height - 40 - h - 2);
+        if (divParam.style.display === "flex") {
+            divParam.style.display = "none";
+            divLine3.style.display = "none";
+            output.setSize(that.width, that.height - 40 - h - 2);
         } else {
-            that.divParam.style.display = "flex";
-            that.divLine3.style.display = "block";
-            that.output.setSize(that.width, that.height - 70 - h - 3);
-            that.edtParam.focus();
+            divParam.style.display = "flex";
+            divLine3.style.display = "block";
+            output.setSize(that.width, that.height - 70 - h - 3);
+            edtParam.focus();
         }
     }
 
@@ -266,26 +280,32 @@ function CodeEditor(baseobj, codeParams, outputParams) {
         this.width = width;
         this.height = height;
         var h = Math.floor(this.height / 3) * 2;
-        size(this.border, {width: this.width + "px", height:this.height + "px"});
-        this.editor.setSize(this.width, h);
-        this.output.setSize(this.width, this.height - 40 - h - 2);
+        size(border, {width: this.width + "px", height: this.height + "px"});
+        editor.setSize(this.width, h);
+        output.setSize(this.width, this.height - 40 - h - 2);
     };
 
     /**
      * 运行代码(以回调的形式)
      */
     function runCode() {
-        that.output.setValue("executing...");
-        var lng = that.language.innerHTML;
+        output.setValue("executing...");
+        var lng = language.innerHTML;
         var code = that.getCode();
-        reqPostJson("/execute", { language: lng, code: code }, function (data) {
-            if (data.result ===  0) {
-                that.output.setValue(data.output + "\n" + data.error);
+        reqPostJson("/execute", {language: lng, code: code}, function (data) {
+            if (data.result === 0) {
+                output.setValue(data.output + "\n" + data.error);
             } else {
                 toastr.error("Execute code error.");
             }
         });
     }
+
+    this.execute = function () {
+        if (this.canrun) {
+            runCode();
+        }
+    };
 
     /**
      * 复制代码到剪贴板
@@ -311,23 +331,42 @@ function CodeEditor(baseobj, codeParams, outputParams) {
     });
 
     this.setTheme = function (isDark) {
-        // TODO: set theme
-        console.log("theme => " + isDark);
+        this.isDark = isDark;
+        attr(border, {class: this.isDark ? "div-code-border-dark" : "div-code-border"});
+        attr(divLine, {class: this.isDark ? "div-line-dark" : "div-line"});
+        attr(divLine2, {class: this.isDark ? "div-line-dark" : "div-line"});
+        attr(edtParam, {type: "input", class: this.isDark ? "input-param-dark" : "input-param"});
+        attr(divLine3, {class: this.isDark ? "div-line-param-dark" : "div-line-param"});
+        attr(imgParam, {src: this.isDark ? "../static/images/code-param-dark.png" : "../static/images/code-param.png"});
+        attr(imgRun, {src: this.isDark ? "../static/images/code-run-dark.png" : "../static/images/code-run.png"});
+        attr(imgCopy, {src: this.isDark ? "../static/images/code-copy-dark.png" : "../static/images/code-copy.png"});
+        editor.setOption("theme", this.isDark ? "darcula" : "default");
+        output.setOption("theme", this.isDark ? "darcula" : "default");
     };
 
+    this.canrun = true;
+
     this.setCanRun = function (canrun) {
+        this.canrun = canrun;
+        var h = Math.floor(this.height / 3) * 2;
         if (canrun) {
-            this.run.style.width = "190px";
-            this.imgParam.style.display = "block";
-            this.spanParam.style.display = "block";
-            this.imgRun.style.display = "block";
-            this.spanRun.style.display = "block";
+            run.style.width = "196px";
+            imgParam.style.display = "block";
+            spanParam.style.display = "block";
+            imgRun.style.display = "block";
+            spanRun.style.display = "block";
+            editor.setSize(this.width, h);
+            output.setSize(this.width, this.height - 40 - h - 2);
+            divLine2.style.display = "block";
         } else {
-            this.run.style.width = "73px";
-            this.imgParam.style.display = "none";
-            this.spanParam.style.display = "none";
-            this.imgRun.style.display = "none";
-            this.spanRun.style.display = "none";
+            run.style.width = "72px";
+            imgParam.style.display = "none";
+            spanParam.style.display = "none";
+            imgRun.style.display = "none";
+            spanRun.style.display = "none";
+            divLine2.style.display = "none";
+            editor.setSize(this.width, this.height - 40 - 1);
+            output.setSize(this.width, 0);
         }
     };
 

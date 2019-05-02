@@ -6,30 +6,19 @@ import com.rarnu.code.code.runners
 import com.rarnu.code.utils.*
 import io.ktor.application.application
 import io.ktor.application.call
-import io.ktor.http.content.*
+import io.ktor.http.content.PartData
 import io.ktor.request.receiveMultipart
 import io.ktor.request.receiveParameters
-import io.ktor.response.respond
 import io.ktor.response.respondText
 import io.ktor.routing.Routing
-import io.ktor.routing.get
 import io.ktor.routing.post
 import java.io.File
 import java.util.*
+import kotlin.collections.forEach
+import kotlin.collections.mutableMapOf
+import kotlin.collections.set
 
 fun Routing.codeRouting() {
-
-
-    get("/index") {
-        val c = call.resolveFileBytes("index.html", "web")!!
-        println("c => ${String(c)}")
-        call.respond(call.resolveResource("index.html", "web") ?: "")
-    }
-
-    get("/hello") {
-        val ses = session
-        call.respondText { ses.uuid }
-    }
 
     post("/code") {
         val p = call.receiveParameters()
@@ -101,7 +90,7 @@ fun Routing.codeRouting() {
             if (runner == null) {
                 call.respondText { "{\"result\":0, \"latex\":\"\", \"error\":\"latex not supported.\"}" }
             } else {
-                val ret = (runner as LatexRunner).imageToLatex(fdest, ext)
+                val ret = (runner as LatexRunner).imageToLatex(application.latex, fdest, ext)
                 val jsonstr =
                     "{\"result\":0, \"latex\":\"${ret.output.toJsonEncoded()}\", \"error\":\"${ret.error.toJsonEncoded()}\"}"
                 call.respondText { jsonstr }
@@ -124,7 +113,7 @@ fun Routing.codeRouting() {
             if (runner == null) {
                 call.respondText { "{\"result\":0, \"latex\":\"\", \"error\":\"latex not supported.\"}" }
             } else {
-                val ret = (runner as LatexRunner).imageToLatex(fdest, "jpg")
+                val ret = (runner as LatexRunner).imageToLatex(application.latex, fdest, "jpg")
                 val jsonstr =
                     "{\"result\":0, \"latex\":\"${ret.output.toJsonEncoded()}\", \"error\":\"${ret.error.toJsonEncoded()}\"}"
                 call.respondText { jsonstr }
