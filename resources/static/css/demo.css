@@ -1,0 +1,15 @@
+.button-demo {
+    font-size: 13px;
+    width: 65px;
+    height: 30px;
+    line-height: 18px;
+    padding: 3px 18px;
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: normal;
+    border-radius: 2px;
+    margin: 0 8px 0 3px;
+    border: 1px solid #3383da;
+    color: #ffffff;
+    background-color: #3383da;
+}

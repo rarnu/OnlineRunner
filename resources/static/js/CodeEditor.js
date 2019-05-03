@@ -109,7 +109,9 @@ function CodeEditor(baseobj, codeParams, outputParams) {
     var h = Math.floor(this.height / 3) * 2;
 
     // params
-
+    if (!codeParams.hasOwnProperty("canRun")) {
+        codeParams["canRun"] = true;
+    }
     if (!codeParams.hasOwnProperty("matchBrackets")) {
         codeParams["matchBrackets"] = true;
     }
@@ -184,6 +186,13 @@ function CodeEditor(baseobj, codeParams, outputParams) {
      */
     this.getCode = function () {
         return editor.getValue();
+    };
+
+    this.setParam = function (p) {
+        edtParam.value = p;
+    };
+    this.getParam = function () {
+        return edtParam.value;
     };
 
     /**
@@ -289,17 +298,28 @@ function CodeEditor(baseobj, codeParams, outputParams) {
      * 运行代码(以回调的形式)
      */
     function runCode() {
-        output.setValue("executing...");
-        var lng = language.innerHTML;
-        var code = that.getCode();
-        reqPostJson("/execute", {language: lng, code: code}, function (data) {
-            if (data.result === 0) {
-                output.setValue(data.output + "\n" + data.error);
-            } else {
-                toastr.error("Execute code error.");
-            }
-        });
+        if (that.onRun) {
+            output.setValue("executing...");
+            var lng = language.innerHTML;
+            var code = that.getCode();
+            var param = that.getParam();
+            that.onRun(lng, code, param);
+        }
     }
+
+    this.showResult = function(data) {
+        if (data.result === 0) {
+            output.setValue(data.output + "\n" + data.error);
+        } else {
+            toastr.error("Execute code error.");
+        }
+    };
+
+    /**
+     *
+     * @type function(lng, code, param)
+     */
+    this.onRun = null;
 
     this.execute = function () {
         if (this.canrun) {
@@ -371,4 +391,6 @@ function CodeEditor(baseobj, codeParams, outputParams) {
     };
 
     this.setLanguage(codeParams.language);
+
+    this.setCanRun(codeParams.canRun);
 }

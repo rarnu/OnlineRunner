@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML Editor</title>
+    <script src="../static/js/allimport.js"></script>
+    <link href="../static/css/demo.css" rel="stylesheet">
+</head>
+<body>
+
+<div style="width: 40%; height: 30px; margin-top: 16px; margin-left: 30%; display: block;">
+    <div style="float:left;  height: 30px;"><span style="height: 30px; vertical-align: middle; font-size: 1.5em;"><a href="index.html">HTML Editor</a></span></div>
+
+    <div style="float: right; ">
+        <button onclick="javascript:editor.setTheme(false);" class="button-demo">Light</button>
+        <button onclick="javascript:editor.setTheme(true);" class="button-demo">Dark</button>
+    </div>
+</div>
+
+<div style="width: 40%; margin-top: 16px; margin-left: 30%">
+    <div id="editor" style="width: 100%; height: 600px;"></div>
+</div>
+
+<script type="text/javascript">
+    var editor = new HtmlEditor($("#editor"), {});
+    editor.setHtmlCode("<html lang='en'>\n<body>\n<button class='btn-css' onclick='sayHello();'>Hello</button>\n</body>\n</html>");
+    editor.setJavascriptCode("function sayHello() {\n    alert('hello');\n}");
+    editor.setCssCode(".btn-css {\n    color: red;\n}");
+    editor.execute();
+</script>
+
+</body>
+</html>

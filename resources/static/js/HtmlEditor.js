@@ -168,7 +168,7 @@ function HtmlEditor(baseobj, codeParams) {
     this.setHtmlCode = function (code) {
         htmlEditor.setValue(code);
     };
-    this.setJavsscriptCode = function (code) {
+    this.setJavascriptCode = function (code) {
         JavascriptEditor.setValue(code);
     };
     this.setCssCode = function (code) {

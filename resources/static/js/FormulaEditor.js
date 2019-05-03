@@ -183,7 +183,7 @@ function FormulaEditor(baseobj, codeParams) {
         }
     }
 
-    this.run = function () {
+    this.execute = function () {
         runCode();
     };
 

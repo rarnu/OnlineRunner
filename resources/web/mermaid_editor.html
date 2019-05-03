@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mermaid Editor</title>
+    <script src="../static/js/allimport.js"></script>
+    <link href="../static/css/demo.css" rel="stylesheet">
+</head>
+<body>
+
+<div style="width: 40%; height: 30px; margin-top: 16px; margin-left: 30%; display: block;">
+    <div style="float:left;  height: 30px;"><span style="height: 30px; vertical-align: middle; font-size: 1.5em;"><a href="index.html">Mermaid Editor</a></span></div>
+
+    <div style="float: right; ">
+        <button onclick="javascript:editor.setTheme(false);" class="button-demo">Light</button>
+        <button onclick="javascript:editor.setTheme(true);" class="button-demo">Dark</button>
+    </div>
+</div>
+
+<div style="width: 40%; margin-top: 16px; margin-left: 30%">
+    <div id="editor" style="width: 100%"></div>
+</div>
+
+<script type="text/javascript">
+    var editor = new FormulaEditor($("#editor"), {
+        language: "Mermaid"
+    });
+    editor.setCode("graph TD\nA[Christmas] -->|Get money| B(Go shopping)\nB --> C{Let me think}\nC -->|One| D[Laptop]\nC -->|Two| E[iPhone]\nC -->|Three| F[Car]");
+    editor.execute();
+</script>
+
+</body>
+</html>

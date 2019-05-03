@@ -2,38 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Online Editor Demo Page</title>
     <script src="../static/js/allimport.js"></script>
-
 </head>
 <body>
-<p>
-<div id="editor" style="width: 40%; height: 400px; margin-left: 30%"></div>
-</p>
-<p>
-    <button onclick="javascript:editor.setTheme(false);htmlEditor.setTheme(false);">Light</button>
-    <button onclick="javascript:editor.setTheme(true);htmlEditor.setTheme(true);">Dark</button>
-    <button onclick="javascript:editor.setCanRun(true);">Can Run</button>
-    <button onclick="javascript:editor.setCanRun(false);">Can't Run</button>
-</p>
-<p>
-<div id="html" style="width: 40%; height: 600px; margin-left: 30%"></div>
-</p>
-<script>
 
-    var editor = new CodeEditor($("#editor"), {
-        language: "JavaScript",
-        isDark: true
-    }, {});
+<div style="width: 100%; margin-top: 16px; text-align: center">
+    <h1>Online Editor Demo Page</h1>
+</div>
 
-    var htmlEditor = new HtmlEditor($("#html"), {
-        isDark: true
-    });
-    editor.setCode("console.log(\"hello js\");");
-    htmlEditor.setHtmlCode("<button class='btn' onclick='test();'>test</button>");
-    htmlEditor.setJavsscriptCode("function test() {\n    alert(\"666\");\n}");
-    htmlEditor.setCssCode(".btn {\n    color:red;\n}");
+<div style="width: 60%; text-align: center; margin-top: 16px; margin-left: 20%">
 
-</script>
+    <div style="float: left; width: 33%; ">
+        <span style="color: darkgray;">Languages (Single)</span>
+        <p style="margin-top: 20px;"><a href="c_single.html">C</a></p>                              <!-- done -->
+        <p style="margin-top: 20px;"><a href="cpp_single.html">C++</a></p>
+        <p style="margin-top: 20px;"><a href="javascript_single.html">Javascript</a></p>
+        <p style="margin-top: 20px;"><a href="python_single.html">Python</a></p>
+        <p style="margin-top: 20px;"><a href="java_single.html">Java</a></p>
+        <p style="margin-top: 20px;"><a href="csharp_single.html">C#</a></p>
+        <p style="margin-top: 20px;"><a href="php_single.html">PHP</a></p>
+        <p style="margin-top: 20px;"><a href="objc_single.html">ObjC</a></p>
+        <p style="margin-top: 20px;"><a href="swift_single.html">Swift</a></p>
+        <p style="margin-top: 20px;"><a href="kotlin_single.html">Kotlin</a></p>
+        <p style="margin-top: 20px;"><a href="go_single.html">Go</a></p>
+        <p style="margin-top: 20px;"><a href="rust_single.html">Rust</a></p>
+        <p style="margin-top: 20px;"><a href="pascal_single.html">Pascal</a></p>
+        <p style="margin-top: 20px;"><a href="ruby_single.html">Ruby</a></p>
+        <p style="margin-top: 20px;"><a href="julia_single.html">Julia</a></p>
+        <p style="margin-top: 20px;"><a href="r_single.html">R</a></p>
+        <p style="margin-top: 20px;"><a href="typescript_single.html">Typescript</a></p>
+        <p style="margin-top: 20px;"><a href="scala_single.html">Scala</a></p>
+        <p style="margin-top: 20px;"><a href="lua_single.html">Lua</a></p>
+        <p style="margin-top: 20px;"><a href="perl_single.html">Perl</a></p>
+        <p style="margin-top: 20px;"><a href="dart_single.html">Dart</a></p>
+        <p style="margin-top: 20px;"><a href="fsharp_single.html">F#</a></p>
+    </div>
+
+    <div style="float: left; width: 33%;">
+        <span style="color: darkgray;">Languages (Multi)</span>
+        <p style="margin-top: 20px;"><a href="c_multi.html">C</a></p>                           <!-- done -->
+        <p style="margin-top: 20px;"><a href="cpp_multi.html">C++</a></p>
+        <p style="margin-top: 20px;"><a href="javascript_multi.html">Javascript</a></p>
+        <p style="margin-top: 20px;"><a href="python_multi.html">Python</a></p>
+        <p style="margin-top: 20px;"><a href="java_multi.html">Java</a></p>
+        <p style="margin-top: 20px;"><a href="csharp_multi.html">C#</a></p>
+        <p style="margin-top: 20px;"><a href="php_multi.html">PHP</a></p>
+        <p style="margin-top: 20px;"><a href="objc_multi.html">ObjC</a></p>
+        <p style="margin-top: 20px;"><a href="swift_multi.html">Swift</a></p>
+        <p style="margin-top: 20px;"><a href="kotlin_multi.html">Kotlin</a></p>
+        <p style="margin-top: 20px;"><a href="go_multi.html">Go</a></p>
+        <p style="margin-top: 20px;"><a href="rust_multi.html">Rust</a></p>
+        <p style="margin-top: 20px;"><a href="pascal_multi.html">Pascal</a></p>
+        <p style="margin-top: 20px;"><a href="ruby_multi.html">Ruby</a></p>
+        <p style="margin-top: 20px;"><a href="julia_multi.html">Julia</a></p>
+        <p style="margin-top: 20px;"><a href="r_multi.html">R</a></p>
+        <p style="margin-top: 20px;"><a href="typescript_multi.html">Typescript</a></p>
+        <p style="margin-top: 20px;"><a href="scala_multi.html">Scala</a></p>
+        <p style="margin-top: 20px;"><a href="lua_multi.html">Lua</a></p>
+        <p style="margin-top: 20px;"><a href="perl_multi.html">Perl</a></p>
+        <p style="margin-top: 20px;"><a href="dart_multi.html">Dart</a></p>
+        <p style="margin-top: 20px;"><a href="fsharp_multi.html">F#</a></p>
+    </div>
+    <div style="float: left; width: 33%;">
+        <span style="color: darkgray; margin-top: 4px;">Complex Items</span>
+        <p style="margin-top: 20px;"><a href="html_editor.html">HTML Editor</a></p>                 <!-- done -->
+        <p style="margin-top: 20px;"><a href="latex_identifier.html">LaTeX Identifier</a></p>
+        <p style="margin-top: 20px;"><a href="latex_editor.html">LaTeX Editor</a></p>               <!-- done -->
+        <p style="margin-top: 20px;"><a href="latex_viewer.html">LaTeX Viewer</a></p>               <!-- done -->
+        <p style="margin-top: 20px;"><a href="mermaid_editor.html">Mermaid Editor</a></p>            <!-- done -->
+        <p style="margin-top: 20px;"><a href="mermaid_viewer.html">Mermaid Viewer</a></p>            <!-- done -->
+    </div>
+</div>
+
 </body>
 </html>
