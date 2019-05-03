@@ -1,7 +1,8 @@
 package com.rarnu.code.code
 
-import com.rarnu.code.ISMACOSX
-import com.rarnu.code.utils.config
+import com.rarnu.kt.ktor.config
+import com.rarnu.kt.ktor.ifcfg
+import com.rarnu.kt.ktor.isMac
 import io.ktor.application.ApplicationCall
 
 inline val ApplicationCall.extensions: Map<String, String>
@@ -36,26 +37,25 @@ inline val ApplicationCall.runners: Map<String, CodeIntf>
     get() = mapOf(
         "c" to CRunner(config("ktor.language.c")),
         "c++" to CppRunner(config("ktor.language.cpp")),
-        "javascript" to JavascriptRunner(config(if (ISMACOSX) "ktor.language.javascriptmac" else "ktor.language.javascript")),
-        "python" to PythonRunner(config(if (ISMACOSX) "ktor.language.pythonmac" else "ktor.language.python")),
+        "javascript" to JavascriptRunner(ifcfg(isMac, "ktor.language.javascriptmac", "ktor.language.javascript")),
+        "python" to PythonRunner(ifcfg(isMac, "ktor.language.pythonmac", "ktor.language.python")),
         "swift" to SwiftRunner(config("ktor.language.swift")),
         "php" to PhpRunner(config("ktor.language.php")),
-        "objc" to ObjcRunner(config(if (ISMACOSX) "ktor.language.objcmac" else "ktor.language.objc")),
-        "kotlin" to KotlinRunner(config(if (ISMACOSX) "ktor.language.kotlinmac" else "ktor.language.kotlin")),
+        "objc" to ObjcRunner(ifcfg(isMac, "ktor.language.objcmac", "ktor.language.objc")),
+        "kotlin" to KotlinRunner(ifcfg(isMac, "ktor.language.kotlinmac", "ktor.language.kotlin")),
         "java" to JavaRunner(config("ktor.language.java")),
-        "go" to GoRunner(config(if (ISMACOSX) "ktor.language.gomac" else "ktor.language.go")),
-        "typescript" to TypescriptRunner(config("ktor.language.typescript"), config(if (ISMACOSX) "ktor.language.javascriptmac" else "ktor.language.javascript")),
-        "dart" to DartRunner(config(if (ISMACOSX) "ktor.language.dartmac" else "ktor.language.dart")),
+        "go" to GoRunner(ifcfg(isMac, "ktor.language.gomac", "ktor.language.go")),
+        "typescript" to TypescriptRunner(config("ktor.language.typescript"), ifcfg(isMac, "ktor.language.javascriptmac", "ktor.language.javascript")),
+        "dart" to DartRunner(ifcfg(isMac, "ktor.language.dartmac", "ktor.language.dart")),
         "ruby" to RubyRunner(config("ktor.language.ruby")),
         "perl" to PerlRunner(config("ktor.language.perl")),
-        "lua" to LuaRunner(config(if (ISMACOSX) "ktor.language.luamac" else "ktor.language.lua")),
-        "scala" to ScalaRunner(config(if (ISMACOSX) "ktor.language.scalamac" else "ktor.language.scala")),
-        "r" to RRunner(config(if (ISMACOSX) "ktor.language.Rmac" else "ktor.language.R")),
+        "lua" to LuaRunner(ifcfg(isMac, "ktor.language.luamac", "ktor.language.lua")),
+        "scala" to ScalaRunner(ifcfg(isMac, "ktor.language.scalamac", "ktor.language.scala")),
+        "r" to RRunner(ifcfg(isMac, "ktor.language.Rmac", "ktor.language.R")),
         "julia" to JuliaRunner(config("ktor.language.julia")),
-        "rust" to RustRunner(config(if (ISMACOSX) "ktor.language.rustmac" else "ktor.language.rust")),
-        "c#" to CSharpRunner(config(if (ISMACOSX) "ktor.language.csharpmac" else "ktor.language.csharp"), config(if (ISMACOSX) "ktor.language.netrunmac" else "ktor.language.netrun")),
-        "f#" to FSharpRunner(config(if (ISMACOSX) "ktor.language.fsharpmac" else "ktor.language.fsharp"), config(if (ISMACOSX) "ktor.language.netrunmac" else "ktor.language.netrun")),
-        "pascal" to PascalRunner(config(if (ISMACOSX) "ktor.language.pascalmac" else "ktor.language.pascal")),
-
+        "rust" to RustRunner(ifcfg(isMac, "ktor.language.rustmac", "ktor.language.rust")),
+        "c#" to CSharpRunner(ifcfg(isMac, "ktor.language.csharpmac", "ktor.language.csharp"), ifcfg(isMac, "ktor.language.netrunmac", "ktor.language.netrun")),
+        "f#" to FSharpRunner(ifcfg(isMac, "ktor.language.fsharpmac", "ktor.language.fsharp"), ifcfg(isMac, "ktor.language.netrunmac", "ktor.language.netrun")),
+        "pascal" to PascalRunner(ifcfg(isMac, "ktor.language.pascalmac", "ktor.language.pascal")),
         "latex" to LatexRunner(config("ktor.mathpix.base64"), config("ktor.mathpix.appid"), config("ktor.mathpix.appkey"))
     )

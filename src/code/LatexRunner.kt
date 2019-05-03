@@ -1,8 +1,8 @@
 package com.rarnu.code.code
 
 import com.rarnu.code.database.LaTeXCache
-import com.rarnu.code.utils.md5Sha1
 import com.rarnu.kt.common.runCommand
+import com.rarnu.kt.ktor.md5Sha1
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.apache.Apache
 import io.ktor.client.request.header

@@ -145,6 +145,15 @@
     min-height: 8px;
 }
 
+.div-formula-output-dark {
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    min-height: 8px;
+    background-color: #2B2B2B;
+    color: #a8b7c6;
+}
+
 
 .edgeLabel {
     font-size: 13px;

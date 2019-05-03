@@ -2,6 +2,7 @@ function FormulaEditor(baseobj, codeParams) {
 
     var that = this;
     this.width = baseobj[0].offsetWidth;
+    this.height = baseobj[0].offsetHeight;
 
     if (!codeParams.hasOwnProperty("isDark")) {
         this.isDark = false;
@@ -152,8 +153,9 @@ function FormulaEditor(baseobj, codeParams) {
         }
     };
 
-    this.resize = function (width) {
+    this.resize = function (width, height) {
         this.width = width;
+        this.height = height;
         border.style.width = this.width + "px";
         divResult.style.width = this.width + "px";
         editor.setSize(this.width, editorHeight);

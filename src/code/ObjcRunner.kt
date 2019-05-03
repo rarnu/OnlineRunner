@@ -1,7 +1,7 @@
 package com.rarnu.code.code
 
-import com.rarnu.code.ISMACOSX
 import com.rarnu.kt.common.runCommand
+import com.rarnu.kt.ktor.isMac
 import java.io.File
 
 class ObjcRunner(cmd: String) : CodeIntf(cmd) {
@@ -14,7 +14,7 @@ class ObjcRunner(cmd: String) : CodeIntf(cmd) {
             commands.add("-o")
             commands.add(mainDest)
             codePack.filterKeys { it.endsWith(".m") }.forEach { _, u -> commands.add(u.absolutePath) }
-            if (ISMACOSX) {
+            if (isMac) {
                 commands.add("-fobjc-arc")
                 commands.add("-framework")
                 commands.add("Foundation")
@@ -63,7 +63,7 @@ class ObjcRunner(cmd: String) : CodeIntf(cmd) {
             commands.add("-o")
             commands.add(dest)
             commands.add(codeFile.absolutePath)
-            if (ISMACOSX) {
+            if (isMac) {
                 commands.add("-fobjc-arc")
                 commands.add("-framework")
                 commands.add("Foundation")

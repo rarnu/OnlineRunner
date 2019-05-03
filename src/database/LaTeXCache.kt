@@ -1,6 +1,6 @@
 package com.rarnu.code.database
 
-import com.rarnu.code.utils.conn
+import com.rarnu.kt.ktor.conn
 import io.ktor.application.Application
 import java.util.*
 
@@ -32,3 +32,4 @@ class LaTeXCache(val app: Application) {
     }
 }
 
+inline val Application.latex: LaTeXCache get() = LaTeXCache(this)

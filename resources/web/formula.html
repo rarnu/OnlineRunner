@@ -8,17 +8,24 @@
 </head>
 <body>
 <p>
+<div id="v_latex" style="width: 40%; margin-left: 30%"></div>
+</p>
+<p>
+<div id="v_mermaid" style="width: 40%; margin-left: 30%"></div>
+</p>
+<p>
 <div id="editor" style="width: 40%; margin-left: 30%"></div>
 </p>
 <p>
-    <button onclick="javascript:editor.setTheme(false);mm.setTheme(false);">Light</button>
-    <button onclick="javascript:editor.setTheme(true);mm.setTheme(true);">Dark</button>
+    <button onclick="javascript:editor.setTheme(false);mm.setTheme(false);vL.setTheme(false);vM.setTheme(false);">Light</button>
+    <button onclick="javascript:editor.setTheme(true);mm.setTheme(true);vL.setTheme(true);vM.setTheme(true);">Dark</button>
 </p>
 <p>
 <div id="mm" style="width: 40%; margin-left: 30%"></div>
 </p>
 
 <script>
+
     var editor = new FormulaEditor($("#editor"), {
         language: "LaTeX",
         isDark: true
@@ -34,6 +41,18 @@
 
     mm.setCode("graph TD\nA[Christmas] -->|Get money| B(Go shopping)\nB --> C{Let me think}\nC -->|One| D[Laptop]\nC -->|Two| E[iPhone]\nC -->|Three| F[Car]");
     mm.run();
+
+    var vL = new FormulaViewer($("#v_latex"), {
+        isDark: true,
+        language: "LaTeX",
+        code: "f(x) = \\int_{-\\infty}^\\infty \\hat f(\\xi)e^{2 \\pi i \\xi x} \\,d\\xi"
+    });
+
+    var vM = new FormulaViewer($("#v_mermaid"), {
+        isDark: true,
+        language: "Mermaid",
+        code: "graph TD\nA[Christmas] -->|Get money| B(Go shopping)\nB --> C{Let me think}\nC -->|One| D[Laptop]\nC -->|Two| E[iPhone]\nC -->|Three| F[Car]"
+    });
 
 </script>
 </body>

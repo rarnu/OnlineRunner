@@ -1,7 +1,7 @@
 package com.rarnu.code.code
 
-import com.rarnu.code.utils.proj
 import com.rarnu.kt.common.runCommand
+import com.rarnu.kt.ktor.proj
 import java.io.File
 
 class JavaRunner(cmd: String) : CodeIntf(cmd) {

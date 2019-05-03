@@ -62,3 +62,4 @@ document.write("<link href='../static/css/CodeEditor.css' rel='stylesheet'>");
 document.write("<script type='text/javascript' src='../static/js/CodeEditor.js'></script>");
 document.write("<script type='text/javascript' src='../static/js/HtmlEditor.js'></script>");
 document.write("<script type='text/javascript' src='../static/js/FormulaEditor.js'></script>");
+document.write("<script type='text/javascript' src='../static/js/FormulaViewer.js'></script>");
