@@ -56,6 +56,5 @@ class LatexRunner(val base64: String, val appid: String, val appkey: String) : C
         }
     }
 
-    override fun run(codeFile: File, param: List<String>) = RunResult()
     override fun runPack(codePack: Map<String, File>, start: String, param: List<String>) = RunResult()
 }

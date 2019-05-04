@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Go Editor</title>
+    <script src="../static/js/allimport.js"></script>
+    <link href="../static/css/demo.css" rel="stylesheet">
+</head>
+<body>
+
+<div style="width: 40%; height: 30px; margin-top: 16px; margin-left: 30%; display: block;">
+    <div style="float:left;  height: 30px;"><span style="height: 30px; vertical-align: middle; font-size: 1.5em;"><a
+            href="index.html">Go Editor</a></span></div>
+    <div style="float: right; ">
+        <button onclick="javascript:editors.forEach(function (value) { value.setTheme(false); });" class="button-demo">Light</button>
+        <button onclick="javascript:editors.forEach(function (value) { value.setTheme(true); });" class="button-demo">Dark</button>
+    </div>
+</div>
+
+<div style="width: 40%; margin-top: 16px; margin-left: 30%">
+    <p>
+        <span>main.go</span><br>
+    <div id="code0" style="width: 100%; height: 400px;"></div>
+    </p>
+    <p>
+        <span>func.go</span><br>
+    <div id="code1" style="width: 100%; height: 400px;"></div>
+    </p>
+</div>
+
+<script type="text/javascript">
+    var filecount = 2;
+    var filenames = ["main.go", "func.go"];
+    var editors = [
+        new CodeEditor($("#code0"), {
+            language: "Go"
+        }, {}),
+        new CodeEditor($("#code1"), {
+            language: "Go",
+            canRun: false
+        }, {})
+    ];
+    editors[0].setCode("package main\nimport \"fmt\"\nfunc main() {\n    a := Add(1, 2)\n    fmt.Printf(\"Hello, %d\", a)\n}");
+    editors[1].setCode("package main\nfunc Add(x int, y int) int {\n    return x + y\n}");
+
+    editors[0].onRun = function (lng, code, param) {
+        var codeData = {};
+        for (var i = 0; i < filecount; i++) {
+            codeData["filename" + i] = filenames[i];
+            codeData["code" + i] = editors[i].getCode();
+        }
+
+        codeData["language"] = lng;
+        codeData["filecount"] = filecount;
+        codeData["start"] = filenames[0];
+
+        $.ajax({
+            url: "/codepack",
+            type: "post",
+            dataType: "json",
+            data: codeData,
+            success: function (data) {
+                editors[0].showResult(data);
+            }
+        });
+
+    };
+</script>
+
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.rarnu.code.code
 
+import com.rarnu.kt.common.runCommand
 import java.io.File
 
 class SwiftRunner(cmd: String) : CodeIntf(cmd) {
@@ -12,7 +13,19 @@ class SwiftRunner(cmd: String) : CodeIntf(cmd) {
         codeStr += "${mainFile.readText()}\n"
         val dest = File(projPath, "dest.swift")
         dest.writeText(codeStr)
-        return run(dest, param)
+        val dir = dest.absolutePath.substringBeforeLast("/")
+        val ret = RunResult()
+        runCommand {
+            commands.add(cmd)
+            commands.add(dest.name)
+            param.forEach { p -> commands.add(p) }
+            workDir = dir
+            result { output, error ->
+                ret.output = output
+                ret.error = error
+            }
+        }
+        return ret
     }
 
 }

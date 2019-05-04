@@ -1,9 +1,11 @@
 package com.rarnu.code
 
+import com.rarnu.code.controller.UtilController
 import com.rarnu.code.controller.controllers
 import io.ktor.application.call
 import io.ktor.response.respondText
 import io.ktor.routing.Routing
+import io.ktor.routing.get
 import io.ktor.routing.post
 
 fun Routing.codeRouting() {
@@ -27,4 +29,10 @@ fun Routing.codeRouting() {
      * LaTeX 识别（演示用）
      */
     post("/latexsample") { call.respondText { call.controllers["/latexsample"]?.control(localSession) ?: "" } }
+
+    /**
+     * 获取服务器端的操作系统
+     * 返回是否 mac
+     */
+    get("/svros") { call.respondText { UtilController.getServerIsMac() } }
 }

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ruby Editor</title>
+    <script src="../static/js/allimport.js"></script>
+    <link href="../static/css/demo.css" rel="stylesheet">
+</head>
+<body>
+
+<div style="width: 40%; height: 30px; margin-top: 16px; margin-left: 30%; display: block;">
+    <div style="float:left;  height: 30px;"><span style="height: 30px; vertical-align: middle; font-size: 1.5em;"><a
+            href="index.html">Ruby Editor</a></span></div>
+    <div style="float: right; ">
+        <button onclick="javascript:editor.setTheme(false);" class="button-demo">Light</button>
+        <button onclick="javascript:editor.setTheme(true);" class="button-demo">Dark</button>
+        <button onclick="javascript:editor.setCanRun(!editor.canrun);" class="button-demo">Edit</button>
+    </div>
+</div>
+
+<div style="width: 40%; margin-top: 16px; margin-left: 30%">
+    <div id="editor" style="width: 100%; height: 600px;"></div>
+</div>
+
+<script type="text/javascript">
+    var editor = new CodeEditor($("#editor"), {
+        language: "Ruby"
+    }, {});
+    editor.setCode("puts \"Hello World\"");
+    editor.onRun = function (lng, code, param) {
+        $.ajax({
+            url: "/code",
+            type: "POST",
+            dataType: "json",
+            data: {
+                language: lng,
+                code: code,
+                param: param,
+                filename: "main.rb"
+            },
+            success: function (data) {
+                editor.showResult(data);
+            }
+        });
+    };
+</script>
+
+</body>
+</html>

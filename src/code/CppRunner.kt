@@ -32,35 +32,4 @@ class CppRunner(cmd: String) : CodeIntf(cmd) {
         }
         return ret
     }
-
-    override fun run(codeFile: File, param: List<String>): RunResult {
-        val ret = RunResult()
-        val dest = codeFile.absolutePath.replace(".cpp", ".out")
-        runCommand {
-            // compile
-            commands.add(cmd)
-            commands.add("-w")
-            commands.add("-o")
-            commands.add(dest)
-            commands.add(codeFile.absolutePath)
-            result { out0, err0 ->
-                if (err0 == "") {
-                    runCommand {
-                        // run compile result
-                        commands.add(dest)
-                        param.forEach { p -> commands.add(p) }
-                        result { out1, err1 ->
-                            ret.output = out1
-                            ret.error = err1
-                        }
-                    }
-                } else {
-                    ret.output = out0
-                    ret.error = err0
-                }
-            }
-        }
-        return ret
-    }
-
 }

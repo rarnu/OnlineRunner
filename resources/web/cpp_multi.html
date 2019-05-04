@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>C++ Editor</title>
+    <script src="../static/js/allimport.js"></script>
+    <link href="../static/css/demo.css" rel="stylesheet">
+</head>
+<body>
+
+<div style="width: 40%; height: 30px; margin-top: 16px; margin-left: 30%; display: block;">
+    <div style="float:left;  height: 30px;"><span style="height: 30px; vertical-align: middle; font-size: 1.5em;"><a
+            href="index.html">C++ Editor</a></span></div>
+    <div style="float: right; ">
+        <button onclick="javascript:editors.forEach(function (value) { value.setTheme(false); });" class="button-demo">Light</button>
+        <button onclick="javascript:editors.forEach(function (value) { value.setTheme(true); });" class="button-demo">Dark</button>
+    </div>
+</div>
+
+<div style="width: 40%; margin-top: 16px; margin-left: 30%">
+    <p>
+        <span>main.cpp</span><br>
+    <div id="code0" style="width: 100%; height: 400px;"></div>
+    </p>
+    <p>
+        <span>func.h</span><br>
+    <div id="code1" style="width: 100%; height: 400px;"></div>
+    </p>
+    <p>
+        <span>func.cpp</span><br>
+    <div id="code2" style="width: 100%; height: 400px;"></div>
+    </p>
+</div>
+
+<script type="text/javascript">
+    var filecount = 3;
+    var filenames = ["main.cpp", "func.h", "func.cpp"];
+    var editors = [
+        new CodeEditor($("#code0"), {
+            language: "C++"
+        }, {}),
+        new CodeEditor($("#code1"), {
+            language: "C++",
+            canRun: false
+        }, {}),
+        new CodeEditor($("#code2"), {
+            language: "C++",
+            canRun: false
+        }, {})
+    ];
+    editors[0].setCode("#include <stdio.h>\n#include \"func.h\"\nint main() {\n    int a = add(1, 2);\n    printf(\"Hello, %d\\n\", a);\n    return 0;\n}");
+    editors[1].setCode("int add(int x, int y);");
+    editors[2].setCode("#include \"func.h\"\nint add(int x, int y) {\n    return x + y;\n}");
+    editors[0].onRun = function (lng, code, param) {
+
+        var codeData = {};
+        for (var i = 0; i < filecount; i++) {
+            codeData["filename" + i] = filenames[i];
+            codeData["code" + i] = editors[i].getCode();
+        }
+
+        codeData["language"] = lng;
+        codeData["filecount"] = filecount;
+        codeData["start"] = filenames[0];
+
+        $.ajax({
+            url: "/codepack",
+            type: "post",
+            dataType: "json",
+            data: codeData,
+            success: function (data) {
+                editors[0].showResult(data);
+            }
+        });
+
+    };
+</script>
+
+</body>
+</html>

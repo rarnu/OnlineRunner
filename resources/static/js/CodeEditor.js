@@ -263,7 +263,7 @@ function CodeEditor(baseobj, codeParams, outputParams) {
                 editor.setOption("mode", "text/x-perl");
                 break;
             case "Dart":
-                editor.setOption("mode", "text/x-dart");
+                editor.setOption("mode", "dart");
                 break;
             case "F#":
                 editor.setOption("mode", "text/x-fsharp");

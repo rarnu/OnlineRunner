@@ -34,32 +34,4 @@ class PascalRunner(cmd: String) : CodeIntf(cmd) {
         return ret
     }
 
-    override fun run(codeFile: File, param: List<String>): RunResult {
-        val ret = RunResult()
-        val dir = codeFile.absolutePath.substringBeforeLast("/")
-        val dest = codeFile.absolutePath.substringBeforeLast(".")
-        runCommand {
-            // compile
-            commands.add(cmd)
-            commands.add(codeFile.name)
-            workDir = dir
-            result { out0, _ ->
-                if (!out0.contains("Fatal: Compilation aborted")) {
-                    runCommand {
-                        commands.add(dest)
-                        param.forEach { p -> commands.add(p) }
-                        result { out1, err1 ->
-                            ret.output = out1
-                            ret.error = err1
-                        }
-                    }
-                } else {
-                    ret.output = ""
-                    ret.error = out0
-                }
-            }
-        }
-        return ret
-    }
-
 }
