@@ -40,6 +40,7 @@ document.write("<script type='text/javascript' src='../static/codemirror/mode/st
 // code hint
 document.write("<link href='../static/codemirror/addon/hint/show-hint.css' rel='stylesheet'>");
 document.write("<script type='text/javascript' src='../static/codemirror/addon/hint/show-hint.js'></script>");
+document.write("<script type='text/javascript' src='../static/codemirror/addon/hint/anyword-hint.js'></script>");
 document.write("<script type='text/javascript' src='../static/codemirror/addon/hint/javascript-hint.js'></script>");
 document.write("<script type='text/javascript' src='../static/codemirror/addon/hint/css-hint.js'></script>");
 document.write("<script type='text/javascript' src='../static/codemirror/addon/hint/xml-hint.js'></script>");

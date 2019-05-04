@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>LaTeX Identifier</title>
     <script src="../static/js/jquery-2.0.0.min.js"></script>
-    <script src="../static/js/ktor.js"></script>
+    <link href="../static/css/demo.css" rel="stylesheet">
     <script type="text/javascript">
         function identifyImage(idx) {
             $("#result" + idx)[0].innerHTML = "Identifying...";
@@ -16,7 +16,7 @@
                     format: "jpg",
                     imageIndex: idx
                 },
-                success: function(data) {
+                success: function (data) {
                     console.log("succ!");
                     if (data.result === 0) {
                         $("#result" + idx)[0].innerHTML = data.latex;
@@ -29,6 +29,7 @@
                 }
             });
         }
+
         function identifyUpload() {
             var img = $("#imgfile")[0].files[0];
             if (img) {
@@ -42,7 +43,7 @@
                     data: fd,
                     processData: false,
                     contentType: false,
-                    success: function(data) {
+                    success: function (data) {
                         console.log("succ!");
                         if (data.result === 0) {
                             $("#result")[0].innerHTML = data.latex;
@@ -60,25 +61,34 @@
 </head>
 <body>
 
-<p>
-<input id="imgfile" type="file"><button onclick="identifyUpload();">Upload</button><br>
-<div id="result"></div>
-</p>
 
-<p>
-<table id="latextable" style="width: 320px; border-spacing: 8px;">
+<div style="width: 40%; height: 30px; margin-top: 16px; margin-left: 30%; display: block;">
+    <div style="float:left;  height: 30px;"><span style="height: 30px; vertical-align: middle; font-size: 1.5em;"><a
+            href="index.html">LaTeX Identifier</a></span></div>
+</div>
 
-</table>
-</p>
+<div style="width: 40%; margin-top: 16px; margin-left: 30%">
+    <p>
+        <input id="imgfile" type="file" style="border: 1px solid lightgrey; outline: none; height: 28px; width: 300px;">
+        <button onclick="identifyUpload();" class="button-demo" style="margin-top: 9px">Go</button>
+        <br>
+    <div id="result"></div>
+    </p>
+    <p>
+    <div id="latextable" style="width: 640px;">
+    </div>
+    </p>
+</div>
+
 
 <script type="text/javascript">
     var str = "";
-    for (var i = 1; i <= 29; i++) {
-        str += "<tr><td  style='border: solid 1px lightgrey; padding: 8px 8px 8px 8px;'>";
-        str += "<img src='../static/images/"+ i + ".jpg' width='300px'><br>";
-        str += "<button onclick='identifyImage("+ i +")'>Identify</button><br>";
-        str += "<div id='result"+ i +"'></div>";
-        str += "</td></tr>";
+    for (var i = 1; i <= 30; i++) {
+        str += "<div class='div-latex-block'>";
+        str += "<img src='../static/images/" + i + ".jpg' style='width: 98%; height: 50%; margin-left: 1%; margin-top: 1%'>";
+        str += "<button class='button-demo' style='height: 9%;' onclick='identifyImage(" + i + ");'>Go</button>";
+        str += "<div id='result" + i + "' style='width: 98%; margin-left: 1%; height: 37%; margin-top: 1%;'></div>";
+        str += "</div>";
     }
     $("#latextable")[0].innerHTML = str;
 </script>
