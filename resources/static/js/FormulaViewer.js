@@ -12,6 +12,7 @@
 function FormulaViewer(baseobj, codeParams) {
 
     var that = this;
+    this.width = baseobj[0].offsetWidth;
 
     if (!codeParams.hasOwnProperty("isDark")) {
         this.isDark = false;
@@ -26,6 +27,7 @@ function FormulaViewer(baseobj, codeParams) {
     baseobj[0].appendChild(output);
 
     this.resize = function (width) {
+        this.width = width;
         output.style.width = width + "px";
     };
 
@@ -47,6 +49,14 @@ function FormulaViewer(baseobj, codeParams) {
             output.innerHTML = code;
             mermaid.parse(code);
             mermaid.init({}, output);
+        } else if (lng === "Function") {
+            if (XCalc.properBrackets(code)) {
+                var graph = XCalc.graphExpression(that.isDark, code, that.width, that.width);
+                output.innerHTML = "";
+                output.appendChild(graph.getCanvas());
+            } else {
+                output.innerHTML = "Error";
+            }
         }
     }
 
@@ -63,7 +73,7 @@ function FormulaViewer(baseobj, codeParams) {
     this.setTheme = function (isDark) {
         this.isDark = isDark;
         attr(output, {class: this.isDark ? "div-formula-output-dark": "div-formula-output"});
-        if (lng === "Mermaid") {
+        if (lng === "Mermaid" || lng === "Function") {
             runCode();
         }
     };

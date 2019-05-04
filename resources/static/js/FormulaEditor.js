@@ -139,7 +139,7 @@ function FormulaEditor(baseobj, codeParams) {
 
     /**
      * 更换语言
-     * @param language
+     * @param lng
      */
     this.setLanguage = function (lng) {
         language.innerHTML = lng;
@@ -149,6 +149,9 @@ function FormulaEditor(baseobj, codeParams) {
                 break;
             case "Mermaid":
                 editor.setOption("mode", "text/plain");
+                break;
+            case "Function":
+                editor.setOption("mode", "text/x-latex");
                 break;
         }
     };
@@ -165,10 +168,12 @@ function FormulaEditor(baseobj, codeParams) {
      * 运行代码(以回调的形式)
      */
     function runCode() {
-        if (language.innerHTML === "LaTeX") {
-            output.innerHTML = "$$" + that.getCode() + "$$";
+        var l = language.innerHTML;
+        var code = that.getCode();
+        if (l === "LaTeX") {
+            output.innerHTML = "$$" + code + "$$";
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-        } else {
+        } else if (l === "Mermaid") {
             output.removeAttribute('data-processed');
             mermaid.initialize({
                 theme: that.isDark ? "dark" : "default",
@@ -176,10 +181,17 @@ function FormulaEditor(baseobj, codeParams) {
                 gantt: {axisFormat: '%m/%d/%Y'},
                 sequence: {actorMargin: 50}
             });
-            var code = that.getCode();
             output.innerHTML = code;
             mermaid.parse(code);
             mermaid.init({}, output);
+        } else if (l === "Function") {
+            if (XCalc.properBrackets(code)) {
+                var graph = XCalc.graphExpression(that.isDark, code, that.width, that.width);
+                output.innerHTML = "";
+                output.appendChild(graph.getCanvas());
+            } else {
+                output.innerHTML = "Error";
+            }
         }
     }
 
@@ -218,7 +230,7 @@ function FormulaEditor(baseobj, codeParams) {
         attr(divLine, {class: this.isDark ? "div-line-dark" : "div-line"});
         attr(divLine2, {class: this.isDark ? "div-line-dark" : "div-line"});
         editor.setOption("theme", this.isDark ? "darcula" : "default");
-        if (language.innerHTML === "Mermaid") {
+        if (language.innerHTML === "Mermaid" || language.innerHTML === "Function") {
             runCode();
         }
     };

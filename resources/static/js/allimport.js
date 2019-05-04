@@ -54,6 +54,9 @@ document.write("<script type='text/javascript' async src='../static/mathjax/Math
 // mermaid
 document.write("<script type='text/javascript' src='../static/mermaid/mermaid.js'></script>");
 
+// xcalc
+document.write("<script type='text/javascript' src='../static/js/xcalc.js'></script>");
+
 // toast
 document.write("<link href='../static/css/toastr.min.css' rel='stylesheet'>");
 document.write("<script type='text/javascript' src='../static/js/toastr.min.js'></script>");

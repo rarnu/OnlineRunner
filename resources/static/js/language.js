@@ -22,6 +22,7 @@ var languageList = [
     "Dart",             // CodeEditor/ServerSide/done
     "F#",               // CodeEditor/ServerSide/done
     "LaTeX",            // FormulaEditor/ClientSide/done
-    "Mermaid",          // FormulaEditor/ClientSide/done
+    "Mermaid",          // FormulaEditor/ClientSide/done,
+    "Function",         // FormulaEditor/ClientSide
     "HTML"              // HtmlEditor/ClientSide/done
 ];
