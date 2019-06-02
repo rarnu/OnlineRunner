@@ -1,14 +1,13 @@
 package com.rarnu.code
 
-import com.rarnu.kt.ktor.asFileMkdirs
-import com.rarnu.kt.ktor.config
-import com.rarnu.kt.ktor.installPlugin
+import com.rarnu.common.asFileMkdirs
+import com.rarnu.ktor.config
+import com.rarnu.ktor.installPlugin
 import io.ktor.application.Application
 import io.ktor.http.content.defaultResource
 import io.ktor.http.content.resources
 import io.ktor.http.content.static
 import io.ktor.routing.routing
-import java.io.File
 
 fun main(args: Array<String>): Unit = io.ktor.server.tomcat.EngineMain.main(args)
 

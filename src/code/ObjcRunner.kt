@@ -1,7 +1,7 @@
 package com.rarnu.code.code
 
-import com.rarnu.kt.common.runCommand
-import com.rarnu.kt.ktor.isMac
+import com.rarnu.common.runCommand
+import com.rarnu.common.isMac
 import java.io.File
 
 class ObjcRunner(cmd: String) : CodeIntf(cmd) {

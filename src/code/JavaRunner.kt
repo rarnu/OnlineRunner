@@ -1,14 +1,14 @@
 package com.rarnu.code.code
 
-import com.rarnu.kt.common.runCommand
-import com.rarnu.kt.ktor.proj
+import com.rarnu.common.runCommand
+import com.rarnu.common.toTitleUpperCase
 import java.io.File
 
 class JavaRunner(cmd: String) : CodeIntf(cmd) {
 
     override fun runPack(codePack: Map<String, File>, start: String, param: List<String>): RunResult {
         val ret = RunResult()
-        val dest = codePack.getValue(start).nameWithoutExtension.proj()
+        val dest = codePack.getValue(start).nameWithoutExtension.toTitleUpperCase()
         val dir = codePack.getValue(start).absolutePath.substringBeforeLast("/")
         runCommand {
             commands.add("${cmd}c")

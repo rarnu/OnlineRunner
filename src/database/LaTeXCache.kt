@@ -1,8 +1,8 @@
 package com.rarnu.code.database
 
-import com.rarnu.kt.ktor.conn
-import com.rarnu.kt.ktor.firstRecord
-import com.rarnu.kt.ktor.string
+import com.rarnu.ktor.conn
+import com.rarnu.common.firstRecord
+import com.rarnu.common.string
 import io.ktor.application.Application
 import java.util.*
 

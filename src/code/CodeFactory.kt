@@ -1,8 +1,8 @@
 package com.rarnu.code.code
 
-import com.rarnu.kt.ktor.config
-import com.rarnu.kt.ktor.ifcfg
-import com.rarnu.kt.ktor.isMac
+import com.rarnu.ktor.config
+import com.rarnu.ktor.ifcfg
+import com.rarnu.common.isMac
 import io.ktor.application.ApplicationCall
 
 inline val ApplicationCall.extensions: Map<String, String>

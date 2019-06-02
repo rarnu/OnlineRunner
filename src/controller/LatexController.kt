@@ -4,10 +4,10 @@ import com.rarnu.code.CodeSession
 import com.rarnu.code.code.LatexRunner
 import com.rarnu.code.code.runners
 import com.rarnu.code.database.latex
-import com.rarnu.kt.ktor.asFileMkdirs
-import com.rarnu.kt.ktor.config
-import com.rarnu.kt.ktor.save
-import com.rarnu.kt.ktor.toJsonEncoded
+import com.rarnu.common.asFileMkdirs
+import com.rarnu.ktor.config
+import com.rarnu.common.toJsonEncoded
+import com.rarnu.ktor.save
 import io.ktor.application.ApplicationCall
 import io.ktor.http.content.PartData
 import io.ktor.request.receiveMultipart

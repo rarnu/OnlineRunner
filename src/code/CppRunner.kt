@@ -1,6 +1,6 @@
 package com.rarnu.code.code
 
-import com.rarnu.kt.common.runCommand
+import com.rarnu.common.runCommand
 import java.io.File
 
 class CppRunner(cmd: String) : CodeIntf(cmd) {
