@@ -55,11 +55,6 @@ mv swift-5.0.1-RELEASE-ubuntu18.04/ swift/
 cd /usr/bin
 sudo ln -s ~/Develop/swift/usr/bin/swift swift
 
-## dart
-cd ~/Develop
-wget https://storage.googleapis.com/dart-archive/channels/stable/release/latest/linux_packages/dart_2.2.0-1_amd64.deb
-sudo dpkg -i dart_2.2.0-1_amd64.deb
-
 ## julia
 cd ~/Develop
 wget https://julialang-s3.julialang.org/bin/linux/x64/1.1/julia-1.1.0-linux-x86_64.tar.gz
@@ -78,3 +73,10 @@ sudo ln -s ~/.sdkman/candidates/kotlin/current/bin/kotlinc kotlinc
 
 ## typescript
 npm install -g typescript
+
+## dart
+sudo apt-get install apt-transport-https
+sudo sh -c 'curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -'
+sudo sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list'
+sudo apt-get update
+sudo apt-get install dart

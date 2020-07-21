@@ -31,7 +31,7 @@ class CodePackController(call: ApplicationCall) : ControllerIntf(call) {
                     val fname = p["filename$i"] ?: ""
                     val fpath = "$uuid/$codeid/$fname"
                     val code = p["code$i"] ?: ""
-                    val f = "${call.config("ktor.code.execPath")}/$fpath".asFileWriteText(code)!!
+                    val f = "${call.config("ktor.code.execPath")}/$fpath".asFileWriteText(code)
                     codemap[fname] = f
                 }
                 val start = p["start"] ?: ""

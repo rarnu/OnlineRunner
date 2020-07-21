@@ -15,7 +15,10 @@ fun main(args: Array<String>): Unit = io.ktor.server.tomcat.EngineMain.main(args
 fun Application.module() {
     config("ktor.code.execPath").asFileMkdirs()
     config("ktor.image.latexPath").asFileMkdirs()
-    installPlugin<CodeSession>(sessionIdentifier = "CodeSession", headers = mapOf("X-Engine" to "Ktor")) {  }
+    installPlugin<CodeSession>(
+            sessionIdentifier = "CodeSession",
+            headers = mapOf("X-Engine" to "Ktor"),
+            redirectHttps = true) {  }
     routing {
         resources("web")
         resources("static")

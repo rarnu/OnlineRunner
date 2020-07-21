@@ -29,7 +29,7 @@ class CodeController(call: ApplicationCall) : ControllerIntf(call) {
             } else {
                 val codemap = mutableMapOf<String, File>()
                 val fpath = "$uuid/$codeid/$filename"
-                val f = "${call.config("ktor.code.execPath")}/$fpath".asFileWriteText(code)!!
+                val f = "${call.config("ktor.code.execPath")}/$fpath".asFileWriteText(code)
                 codemap[filename] = f
                 val execret = runner.runPack(codemap, filename, param.split(" "))
                 "{\"result\":0, \"output\":\"${execret.output.toJsonEncoded()}\", \"error\":\"${execret.error.toJsonEncoded()}\"}"

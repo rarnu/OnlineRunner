@@ -28,19 +28,38 @@ repositories {
     maven { url 'http://119.3.22.119:8081/repository/maven-releases' }
 }
 
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    compile "com.rarnu:ktor-jvm:0.1.0"
+    compile "io.ktor:ktor-server-servlet:$ktor_version"
+    compile "io.ktor:ktor-server-tomcat:$ktor_version"
+    compile "io.ktor:ktor-websockets:$ktor_version"
+    compile "ch.qos.logback:logback-classic:$logback_version"
+    compile "io.ktor:ktor-server-core:$ktor_version"
+    compile "io.ktor:ktor-server-host-common:$ktor_version"
+    compile "io.ktor:ktor-server-sessions:$ktor_version"
+    compile "io.ktor:ktor-client-apache:$ktor_version"
+    compile "io.ktor:ktor-network-tls:$ktor_version"
+    compile "com.rarnu:ktor-jvm:0.8.0"
     testCompile "io.ktor:ktor-server-tests:$ktor_version"
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions.freeCompilerArgs += ["-Xuse-experimental=kotlin.Experimental"]
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+distTar {
+    into("${project.name}-${project.version}") {
+        from '.'
+        include 'lib*.*'
+    }
+}
+
+distZip {
+    into("${project.name}-${project.version}") {
+        from '.'
+        include 'lib*.*'
+    }
 }
