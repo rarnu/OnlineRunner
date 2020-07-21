@@ -13,7 +13,6 @@ document.write("<link href='../static/codemirror/theme/monokai.css' rel='stylesh
 
 // languages
 document.write("<script type='text/javascript' src='../static/js/language.js'></script>");
-
 document.write("<script type='text/javascript' src='../static/codemirror/addon/mode/simple.js'></script>");
 document.write("<script type='text/javascript' src='../static/codemirror/mode/meta.js'></script>");
 document.write("<script type='text/javascript' src='../static/codemirror/mode/clike/clike.js'></script>");
@@ -47,15 +46,6 @@ document.write("<script type='text/javascript' src='../static/codemirror/addon/h
 document.write("<script type='text/javascript' src='../static/codemirror/addon/hint/html-hint.js'></script>");
 document.write("<script type='text/javascript' src='../static/codemirror/addon/selection/active-line.js'></script>");
 document.write("<script type='text/javascript' src='../static/codemirror/addon/edit/matchbrackets.js'></script>");
-
-// mathjax
-document.write("<script type='text/javascript' async src='../static/mathjax/MathJax.js?config=TeX-MML-AM_CHTML'></script>");
-
-// mermaid
-document.write("<script type='text/javascript' src='../static/mermaid/mermaid.js'></script>");
-
-// xcalc
-document.write("<script type='text/javascript' src='../static/js/xcalc.js'></script>");
 
 // toast
 document.write("<link href='../static/css/toastr.min.css' rel='stylesheet'>");
